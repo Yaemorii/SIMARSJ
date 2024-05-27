@@ -72,7 +72,7 @@ class AsetController extends Controller
 
         return view('aset.form', ['aset' => $aset]);
     }
-
+// Test Commit
     public function update($id, Request $request)
     {
         $request->validate([
