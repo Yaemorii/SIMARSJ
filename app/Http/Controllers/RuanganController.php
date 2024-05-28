@@ -1,0 +1,62 @@
+<?php
+
+namespace App\Http\Controllers;
+
+use App\Models\Ruangan;
+use Illuminate\Http\Request;
+
+class RuanganController extends Controller
+{
+    public function index ()
+    {
+        $ruangan = Ruangan::get();
+
+        return view('ruangan.index', ['data'=>$ruangan]);
+    }
+
+    public function tambah()
+    {
+        return view('ruangan.form');
+    }
+
+    public function simpan(Request $request)
+    {
+        $ruangan = [
+            'no_ruangan'        => $request->no_ruangan,
+            'nama_ruangan'      => $request->nama_ruangan,
+            'penanggung_jawab'  => $request->penanggung_jawab,
+            'nip'               => $request->nip,
+        ];
+
+        Ruangan::create($ruangan);
+
+        return redirect()->route('ruangan');
+    }
+
+    public function edit($id)
+    {
+        $ruangan = Ruangan::where('id',$id)->first();
+
+        return view('ruangan.form',['ruangan' => $ruangan]);
+    }
+
+    public function update($id, Request $request)
+    {
+        $ruangan = [
+            'no_ruangan'        => $request->no_ruangan,
+            'nama_ruangan'      => $request->nama_ruangan,
+            'penanggung_jawab'  => $request->penanggung_jawab,
+            'nip'               => $request->nip,
+        ];
+        Ruangan::find($id)->update($ruangan);
+
+        return redirect()->route('ruangan');
+    }
+
+    public function hapus($id)
+    {
+        Ruangan::find($id)->delete();
+        
+        return redirect()->route('ruangan');
+    }
+}

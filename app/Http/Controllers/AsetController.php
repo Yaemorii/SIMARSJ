@@ -32,6 +32,11 @@ class AsetController extends Controller
             'satuan' => 'required|string|max:255',
             'tahun_pembelian' => 'required|date',
             'sumber_dana' => 'required|string|max:255',
+            'pabrik' => 'required|string|max:255',
+            'rangka' => 'required|string|max:255',
+            'mesin' => 'required|string|max:255',
+            'polisi' => 'required|string|max:255',
+            'bpkb' => 'required|string|max:255',
             'gambar_aset' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048',
             'jumlah' => 'required|integer',
             'kondisi' => 'required|string|max:255',
@@ -56,6 +61,11 @@ class AsetController extends Controller
             'satuan' => $request->satuan,
             'tahun_pembelian' => $request->tahun_pembelian,
             'sumber_dana' => $request->sumber_dana,
+            'pabrik' => $request->pabrik,
+            'rangka' => $request->rangka,
+            'mesin' => $request->mesin,
+            'polisi' => $request->polisi,
+            'bpkb' => $request->bpkb,
             'jumlah' => $request->jumlah,
             'kondisi' => $request->kondisi,
             'harga' => $request->harga,
@@ -72,7 +82,7 @@ class AsetController extends Controller
 
         return view('aset.form', ['aset' => $aset]);
     }
-// Test Commit
+
     public function update($id, Request $request)
     {
         $request->validate([
@@ -85,6 +95,11 @@ class AsetController extends Controller
             'satuan' => 'required|string|max:255',
             'tahun_pembelian' => 'required|date',
             'sumber_dana' => 'required|string|max:255',
+            'pabrik' => 'required|string|max:255',
+            'rangka' => 'required|string|max:255',
+            'mesin' => 'required|string|max:255',
+            'polisi' => 'required|string|max:255',
+            'bpkb' => 'required|string|max:255',
             'gambar_aset' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048',
             'jumlah' => 'required|integer',
             'kondisi' => 'required|string|max:255',
@@ -105,6 +120,11 @@ class AsetController extends Controller
             'satuan' => $request->satuan,
             'tahun_pembelian' => $request->tahun_pembelian,
             'sumber_dana' => $request->sumber_dana,
+            'pabrik' => $request->pabrik,
+            'rangka' => $request->rangka,
+            'mesin' => $request->mesin,
+            'polisi' => $request->polisi,
+            'bpkb' => $request->bpkb,
             'jumlah' => $request->jumlah,
             'kondisi' => $request->kondisi,
             'harga' => $request->harga,

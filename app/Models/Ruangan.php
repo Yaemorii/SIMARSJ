@@ -5,9 +5,9 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class Aset extends Model
+class Ruangan extends Model
 {
     use HasFactory;
 
-    protected $guarded = [];
+    protected $fillable = ['no_ruangan', 'nama_ruangan', 'penanggung_jawab', 'nip' ];
 }

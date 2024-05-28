@@ -9,7 +9,10 @@
     </div>
     <div class="card-body">
         <div class="table-responsive">
-            <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
+            <div class="d-flex justify-content-end">
+                <a href="{{ route('pemeliharaan.tambah') }}" class="btn btn-primary">+ Tambah Data</a>
+            </div>
+            <table class="table table-bordered mt-3" id="dataTable" width="100%" cellspacing="0">
                 <thead>
                     <tr>
                         <th>No</th>
@@ -41,9 +44,6 @@
                     @endforeach
                 </tbody>
             </table>
-            <div class="d-flex justify-content-end">
-                <a href="{{ route('pemeliharaan.tambah') }}" class="btn btn-primary">+ Tambah Data</a>
-            </div>
         </div>
     </div>
 </div>

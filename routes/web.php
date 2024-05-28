@@ -6,6 +6,8 @@ use App\Http\Controllers\MutasiController;
 use App\Http\Controllers\PemeliharaanController;
 use App\Http\Controllers\PengadaanController;
 use App\Http\Controllers\PeminjamanController;
+use App\Http\Controllers\RuanganController;
+
 
 /*
 |--------------------------------------------------------------------------
@@ -69,4 +71,13 @@ Route::controller(PeminjamanController::class)->prefix('peminjaman')->group(func
     Route::get('edit/{id}','edit')->name('peminjaman.edit');
     Route::put('edit/{id}','update')->name('peminjaman.tambah.update');
     Route::get('hapus/{id}','hapus')->name('peminjaman.hapus');
+});
+
+Route::controller(RuanganController::class)->prefix('ruangan')->group(function () {
+    Route::get('','index')->name('ruangan');
+    Route::get('tambah','tambah')->name('ruangan.tambah');
+    Route::post('tambah','simpan')->name('ruangan.tambah.simpan');
+    Route::get('edit/{id}','edit')->name('ruangan.edit');
+    Route::put('edit/{id}','update')->name('ruangan.tambah.update');
+    Route::get('hapus/{id}','hapus')->name('ruangan.hapus');
 });

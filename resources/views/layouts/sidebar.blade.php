@@ -54,6 +54,12 @@
             <span>Peminjaman Aset</span></a>
     </li>
 
+    <li class="nav-item">
+        <a class="nav-link" href="{{ route('ruangan') }}">
+            <i class="fa-solid fa-building"></i>
+            <span>Ruangan</span></a>
+    </li>
+
     <li class="nav-item active">
         <a class="nav-link menu-header">
             <i class="fa-solid"></i>
