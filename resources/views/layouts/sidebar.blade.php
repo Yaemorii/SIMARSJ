@@ -43,12 +43,6 @@
     </li>
 
     <li class="nav-item">
-        <a class="nav-link" href="{{ route('pengadaan') }}">
-            <i class="fa-solid fa-dolly"></i>
-            <span>Pengadaan Aset</span></a>
-    </li>
-
-    <li class="nav-item">
         <a class="nav-link" href="{{ route('peminjaman') }}">
             <i class="fa-solid fa-people-carry-box"></i>
             <span>Peminjaman Aset</span></a>

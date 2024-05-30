@@ -3,20 +3,23 @@
 namespace App\Http\Controllers;
 
 use App\Models\Pinjam;
+use App\Models\Aset;
+use App\Models\Ruangan;
 use Illuminate\Http\Request;
 
 class PeminjamanController extends Controller
 {
     public function index ()
     {
-        $peminjaman = Pinjam::get();
-
-        return view('peminjaman.index', ['data'=>$peminjaman]);
+        $peminjaman = Pinjam::with(['asset', 'ruanganAsal'])->get();
+        return view('peminjaman.index', ['data' => $peminjaman]);
     }
 
     public function tambah()
     {
-        return view('peminjaman.form');
+        $asets = Aset::all();
+        $ruangan = Ruangan::all();
+        return view('peminjaman.form', ['asets' => $asets, 'ruangan' => $ruangan]);
     }
 
     public function simpan(Request $request)
@@ -27,6 +30,7 @@ class PeminjamanController extends Controller
             'aset_dipinjam'   => $request->aset_dipinjam,
             'jumlah_dipinjam' => $request->jumlah_dipinjam,
             'peminjam'        => $request->peminjam,
+            'ruangan_peminjam'=> $request->ruangan_peminjam,
         ];
 
         Pinjam::create($peminjaman);
@@ -36,9 +40,10 @@ class PeminjamanController extends Controller
 
     public function edit($id)
     {
-        $peminjaman = Pinjam::where('id',$id)->first();
-
-        return view('peminjaman.form',['peminjaman' => $peminjaman]);
+        $peminjaman = Pinjam::where('id', $id)->first();
+        $asets = Aset::all();
+        $ruangan = Ruangan::all();
+        return view('peminjaman.form', ['peminjaman' => $peminjaman, 'asets' => $asets, 'ruangan' => $ruangan]);
     }
 
     public function update($id, Request $request)
@@ -49,6 +54,7 @@ class PeminjamanController extends Controller
             'aset_dipinjam'   => $request->aset_dipinjam,
             'jumlah_dipinjam' => $request->jumlah_dipinjam,
             'peminjam'        => $request->peminjam,
+            'ruangan_peminjam'=> $request->ruangan_peminjam,
         ];
         Pinjam::find($id)->update($peminjaman);
 

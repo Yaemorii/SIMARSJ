@@ -10,4 +10,14 @@ class Pemeliharaan extends Model
     use HasFactory;
 
     protected $fillable = ['tgl_pemeliharaan', 'jenis_pemeliharaan', 'aset_pelihara', 'ruangan', 'jumlah_pelihara', 'biaya_pemeliharaan'];
+
+    public function asset()
+    {
+        return $this->belongsTo(Aset::class, 'aset_pelihara');
+    }
+
+    public function ruanganAsal()
+    {
+        return $this->belongsTo(Ruangan::class, 'ruangan');
+    }
 }

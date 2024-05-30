@@ -116,27 +116,27 @@
                             <div class="form-group">
                                 <label for="pabrik">Pabrik</label>
                                 <input type="text" class="form-control" id="pabrik" name="pabrik"
-                                    value="{{ isset($aset) ? $aset->pabrik : '' }}">
+                                    data-value="{{ isset($aset) ? $aset->pabrik : '' }}">
                             </div>
                             <div class="form-group">
                                 <label for="rangka">Rangka</label>
                                 <input type="text" class="form-control" id="rangka" name="rangka"
-                                    value="{{ isset($aset) ? $aset->rangka : '' }}">
+                                    data-value="{{ isset($aset) ? $aset->rangka : '' }}">
                             </div>
                             <div class="form-group">
                                 <label for="mesin">Mesin</label>
                                 <input type="text" class="form-control" id="mesin" name="mesin"
-                                    value="{{ isset($aset) ? $aset->mesin : '' }}">
+                                    data-value="{{ isset($aset) ? $aset->mesin : '' }}">
                             </div>
                             <div class="form-group">
                                 <label for="polisi">Polisi</label>
                                 <input type="text" class="form-control" id="polisi" name="polisi"
-                                    value="{{ isset($aset) ? $aset->polisi : '' }}">
+                                    data-value="{{ isset($aset) ? $aset->polisi : '' }}">
                             </div>
                             <div class="form-group">
                                 <label for="bpkb">BPKB</label>
                                 <input type="text" class="form-control" id="bpkb" name="bpkb"
-                                    value="{{ isset($aset) ? $aset->bpkb : '' }}">
+                                    data-value="{{ isset($aset) ? $aset->bpkb : '' }}">
                             </div>
                         </div>
                         <div class="form-group">
@@ -181,7 +181,8 @@
                 if (kategoriAset.value === 'Kendaraan') {
                     formKendaraan.style.display = 'block';
                     kendaraanFields.forEach(id => {
-                        document.getElementById(id).value = '';
+                        document.getElementById(id).value = document.getElementById(id).getAttribute(
+                            'data-value');
                     });
                 } else {
                     formKendaraan.style.display = 'none';

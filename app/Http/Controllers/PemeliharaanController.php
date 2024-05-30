@@ -3,20 +3,23 @@
 namespace App\Http\Controllers;
 
 use App\Models\Pemeliharaan;
+use App\Models\Aset;
+use App\Models\Ruangan;
 use Illuminate\Http\Request;
 
 class PemeliharaanController extends Controller
 {
     public function index ()
     {
-        $pemeliharaan = Pemeliharaan::get();
-
-        return view('pemeliharaan.index', ['data'=>$pemeliharaan]);
+        $pemeliharaan = Pemeliharaan::with(['asset', 'ruanganAsal'])->get();
+        return view('pemeliharaan.index', ['data' => $pemeliharaan]);
     }
 
     public function tambah()
     {
-        return view('pemeliharaan.form');
+        $asets = Aset::all();
+        $ruangan = Ruangan::all();
+        return view('pemeliharaan.form', ['asets' => $asets, 'ruangan' => $ruangan]);
     }
 
     public function simpan(Request $request)
@@ -37,9 +40,10 @@ class PemeliharaanController extends Controller
 
     public function edit($id)
     {
-        $pemeliharaan = Pemeliharaan::where('id',$id)->first();
-
-        return view('pemeliharaan.form',['pemeliharaan' => $pemeliharaan]);
+        $pemeliharaan = Pemeliharaan::where('id', $id)->first();
+        $asets = Aset::all();
+        $ruangan = Ruangan::all();
+        return view('pemeliharaan.form', ['pemeliharaan' => $pemeliharaan, 'asets' => $asets, 'ruangan' => $ruangan]);
     }
 
     public function update($id, Request $request)

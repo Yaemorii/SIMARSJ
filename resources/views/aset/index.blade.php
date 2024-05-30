@@ -99,10 +99,10 @@
                                                     <p><strong>Sumber Dana:</strong> {{ $row->sumber_dana }}</p>
                                                     @if ($row->kategori_aset == 'Kendaraan')
                                                         <p><strong>Pabrik:</strong> {{ $row->pabrik }}</p>
-                                                        <p><strong>Rangka:</strong> {{ $row->rangka }}</p>
-                                                        <p><strong>Mesin:</strong> {{ $row->mesin }}</p>
-                                                        <p><strong>Polisi:</strong> {{ $row->polisi }}</p>
-                                                        <p><strong>BPKB:</strong> {{ $row->bpkb }}</p>
+                                                        <p><strong>No.Rangka:</strong> {{ $row->rangka }}</p>
+                                                        <p><strong>No.Mesin:</strong> {{ $row->mesin }}</p>
+                                                        <p><strong>No.Polisi:</strong> {{ $row->polisi }}</p>
+                                                        <p><strong>No.BPKB:</strong> {{ $row->bpkb }}</p>
                                                     @endif
                                                     <p><strong>Jumlah:</strong> {{ $row->jumlah }}</p>
                                                     <p><strong>Kondisi:</strong> {{ $row->kondisi }}</p>

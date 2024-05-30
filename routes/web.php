@@ -55,15 +55,6 @@ Route::controller(PemeliharaanController::class)->prefix('pemeliharaan')->group(
     Route::get('hapus/{id}','hapus')->name('pemeliharaan.hapus');
 });
 
-Route::controller(PengadaanController::class)->prefix('pengadaan')->group(function () {
-    Route::get('','index')->name('pengadaan');
-    Route::get('tambah','tambah')->name('pengadaan.tambah');
-    Route::post('tambah','simpan')->name('pengadaan.tambah.simpan');
-    Route::get('edit/{id}','edit')->name('pengadaan.edit');
-    Route::put('edit/{id}','update')->name('pengadaan.tambah.update');
-    Route::get('hapus/{id}','hapus')->name('pengadaan.hapus');
-});
-
 Route::controller(PeminjamanController::class)->prefix('peminjaman')->group(function () {
     Route::get('','index')->name('peminjaman');
     Route::get('tambah','tambah')->name('peminjaman.tambah');

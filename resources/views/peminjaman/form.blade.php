@@ -1,54 +1,76 @@
 @extends('layouts.app')
 
-@section('title','Form Peminjaman')
+@section('title', 'Form Peminjaman')
 
 @section('content')
-<form action="{{ isset($peminjaman) ? route('peminjaman.tambah.update', $peminjaman->id) : route('peminjaman.tambah.simpan') }}" method="post">
-@csrf
-@if(isset($peminjaman))
-    @method('PUT')
-@endif
-    <div class="row">
-        <div class="col-12">
-            <div class="card shadow mb-4">
-                <div class="card-header py-3">
-                    <h6 class="m-0 font-weight-bold text-primary">{{ isset($peminjaman) ? 'Form Edit Peminjaman' : 'Form Tambah Peminjaman' }}</h6>
-                </div>
-                <div class="card-body">
-                    <div class="form-group">
-                        <label for="tgl_pinjam">Tanggal Peminjaman</label>
-                        <input type="date" class="form-control" id="tgl_pinjam" name="tgl_pinjam" value="{{ isset($peminjaman) ? $peminjaman->tgl_pinjam : '' }}">
+    <form
+        action="{{ isset($peminjaman) ? route('peminjaman.tambah.update', $peminjaman->id) : route('peminjaman.tambah.simpan') }}"
+        method="post">
+        @csrf
+        @if (isset($peminjaman))
+            @method('PUT')
+        @endif
+        <div class="row">
+            <div class="col-12">
+                <div class="card shadow mb-4">
+                    <div class="card-header py-3">
+                        <h6 class="m-0 font-weight-bold text-primary">
+                            {{ isset($peminjaman) ? 'Form Edit Peminjaman' : 'Form Tambah Peminjaman' }}</h6>
                     </div>
-                    <div class="form-group">
-                        <label for="tgl_kembali">Tanggal Pengembalian</label>
-                        <input type="date" class="form-control" id="tgl_kembali" name="tgl_kembali" value="{{ isset($peminjaman) ? $peminjaman->tgl_kembali : '' }}">
-                    </div>
-                    <div class="form-group">
-                        <label for="peminjam">Peminjam</label>
-                        <input type="text" class="form-control" id="peminjam" name="peminjam" value="{{ isset($peminjaman) ? $peminjaman->peminjam : '' }}">
-                    </div>
+                    <div class="card-body">
                         <div class="form-group">
-                            <label for="sumber_dana">Aset yang dipinjam</label>
-                            <select class="form-control" id="sumber_dana" name="sumber_dana">
-                                <option disabled {{ !isset($peminjaman) ? 'selected' : '' }}>Pilih Sumber Dana</option>
-                                <option value="Test" {{ isset($peminjaman) && $peminjaman->ruangan == 'Test' ? 'selected' : '' }}>Test</option>
-                                {{-- <option value="APBN" {{ isset($peminjaman) && $peminjaman->sumber_dana == 'APBN' ? 'selected' : '' }}>APBN</option>
-                                <option value="APBD" {{ isset($peminjaman) && $peminjaman->sumber_dana == 'APBD' ? 'selected' : '' }}>APBD</option>
-                                <option value="Hibah" {{ isset($peminjaman) && $peminjaman->sumber_dana == 'Hibah' ? 'selected' : '' }}>Hibah</option>
-                                <option value="Donasi" {{ isset($peminjaman) && $peminjaman->sumber_dana == 'Donasi' ? 'selected' : '' }}>Donasi</option> --}}
+                            <label for="tgl_pinjam">Tanggal Peminjaman</label>
+                            <input type="date" class="form-control" id="tgl_pinjam" name="tgl_pinjam"
+                                value="{{ isset($peminjaman) ? $peminjaman->tgl_pinjam : '' }}">
+                        </div>
+                        <div class="form-group">
+                            <label for="tgl_kembali">Tanggal Pengembalian</label>
+                            <input type="date" class="form-control" id="tgl_kembali" name="tgl_kembali"
+                                value="{{ isset($peminjaman) ? $peminjaman->tgl_kembali : '' }}">
+                        </div>
+                        <div class="form-group">
+                            <label for="peminjam">Nama Peminjam</label>
+                            <input type="text" class="form-control" id="peminjam" name="peminjam"
+                                value="{{ isset($peminjaman) ? $peminjaman->peminjam : '' }}">
+                        </div>
+                        <div class="form-group">
+                            <label for="ruangan_peminjam">Ruangan Peminjam</label>
+                            <select class="form-control" id="ruangan_peminjam" name="ruangan_peminjam"
+                                value="{{ isset($peminjaman) ? $peminjaman->peminjam : '' }}">
+                            <option disabled {{ !isset($peminjaman) ? 'selected' : '' }}>Pilih Ruangan</option>
+                            @foreach ($ruangan as $r)
+                                <option value="{{ $r->id }}"
+                                    {{ isset($peminjaman) && $peminjaman->ruangan == $r->id ? 'selected' : '' }}>
+                                    {{ $r->nama_ruangan }}
+                                </option>
+                            @endforeach
                             </select>
                         </div>
                         <div class="form-group">
-                            <label for="jumlah_dipinjam">Tanggal Pengadaan</label>
-                            <input type="number" class="form-control" id="jumlah_dipinjam" name="jumlah_dipinjam" value="{{ isset($peminjaman) ? $peminjaman->jumlah_dipinjam : '' }}">
+                            <label for="sumber_dana">Aset yang dipinjam</label>
+                            <select class="form-control" id="aset_dipinjam" name="aset_dipinjam"
+                                value="{{ isset($peminjaman) ? $peminjaman->aset_dipinjam : '' }}">
+                                <option disabled {{ !isset($peminjaman) ? 'selected' : '' }}>Pilih Aset</option>
+                                @foreach ($asets as $aset)
+                                    <option value="{{ $aset->id }}"
+                                        {{ isset($peminjaman) && $peminjaman->aset_dipinjam == $aset->id ? 'selected' : '' }}>
+                                        {{ $aset->nama_aset }} - {{ $aset->merek }}
+                                    </option>
+                                @endforeach
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label for="jumlah_dipinjam">Jumlah Aset dipinjam</label>
+                            <input type="number" class="form-control" id="jumlah_dipinjam" name="jumlah_dipinjam"
+                                value="{{ isset($peminjaman) ? $peminjaman->jumlah_dipinjam : '' }}">
                         </div>
                     </div>
-                <div class="card-footer d-flex justify-content-end">
-                    <a href="{{ url()->previous() }}" class="btn btn-secondary mr-2">Kembali</a>
-                    <button type="submit" class="btn btn-primary">Simpan</button>
+                    <div class="card-footer d-flex justify-content-end">
+                        <a href="{{ url()->previous() }}" class="btn btn-secondary mr-2">Kembali</a>
+                        <button type="submit" class="btn btn-primary">Simpan</button>
+                    </div>
                 </div>
             </div>
         </div>
-    </div>
-</form>
+    </form>
 @endsection
