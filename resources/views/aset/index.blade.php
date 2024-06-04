@@ -36,7 +36,6 @@
                             <th>Merek</th>
                             <th>Kategori Aset</th>
                             <th>Satuan</th>
-                            <th>Jumlah</th>
                             <th>Aksi</th>
                         </tr>
                     </thead>
@@ -58,16 +57,16 @@
                                 <td>{{ $row->merek }}</td>
                                 <td>{{ $row->kategori_aset }}</td>
                                 <td>{{ $row->satuan }}</td>
-                                <td>{{ $row->jumlah }}</td>
                                 <td>
                                     <a href="{{ route('aset.edit', $row->id) }}" class="btn btn-warning">Edit</a>
-                                    <a href="{{ route('aset.hapus', $row->id) }}" class="btn btn-danger">Hapus</a>
+                                    <button class="btn btn-danger" data-toggle="modal"
+                                        data-target="#hapusModal{{ $row->id }}">Hapus</button>
                                     <button type="button" class="btn btn-info" data-toggle="modal"
                                         data-target="#detailModal{{ $row->id }}">Detail</button>
                                 </td>
                             </tr>
 
-                            <!-- Modal -->
+                            <!-- Detail Modal -->
                             <div class="modal fade" id="detailModal{{ $row->id }}" tabindex="-1" role="dialog"
                                 aria-labelledby="detailModalLabel{{ $row->id }}" aria-hidden="true">
                                 <div class="modal-dialog" role="document">
@@ -104,15 +103,44 @@
                                                         <p><strong>No.Polisi:</strong> {{ $row->polisi }}</p>
                                                         <p><strong>No.BPKB:</strong> {{ $row->bpkb }}</p>
                                                     @endif
-                                                    <p><strong>Jumlah:</strong> {{ $row->jumlah }}</p>
                                                     <p><strong>Kondisi:</strong> {{ $row->kondisi }}</p>
-                                                    <p><strong>Harga Satuan:</strong> {{ $row->harga }}</p>
+                                                    <p><strong>Harga Satuan:</strong> Rp.{{ $row->harga }}</p>
+                                                    <p><strong>Keterangan:</strong> {{ $row->keterangan }}</p>
                                                 </div>
                                             </div>
                                         </div>
                                         <div class="modal-footer">
                                             <button type="button" class="btn btn-secondary"
                                                 data-dismiss="modal">Close</button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Hapus Modal -->
+                            <div class="modal fade" id="hapusModal{{ $row->id }}" tabindex="-1" role="dialog"
+                                aria-labelledby="hapusModalLabel{{ $row->id }}" aria-hidden="true">
+                                <div class="modal-dialog" role="document">
+                                    <div class="modal-content">
+                                        <div class="modal-header">
+                                            <h5 class="modal-title" id="hapusModalLabel{{ $row->id }}">Konfirmasi
+                                                Hapus</h5>
+                                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                                <span aria-hidden="true">&times;</span>
+                                            </button>
+                                        </div>
+                                        <div class="modal-body">
+                                            Apakah anda yakin ingin menghapus data aset "{{ $row->nama_aset }}" ? Data mungkin akan terhapus juga pada bagian mutasi, pemeliharaan dan peminjaman.
+                                        </div>
+                                        <div class="modal-footer">
+                                            <button type="button" class="btn btn-secondary"
+                                                data-dismiss="modal">Batal</button>
+                                            <form action="{{ route('aset.hapus', $row->id) }}" method="POST"
+                                                class="d-inline">
+                                                @csrf
+                                                @method('DELETE') <!-- Menggunakan metode DELETE -->
+                                                <button type="submit" class="btn btn-danger">Hapus</button>
+                                            </form>
                                         </div>
                                     </div>
                                 </div>

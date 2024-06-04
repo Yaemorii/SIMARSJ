@@ -20,7 +20,6 @@
                             <th>Jenis Pemeliharaan</th>
                             <th>Aset yang dipelihara</th>
                             <th>Ruangan</th>
-                            <th>Jumlah</th>
                             <th>Biaya Pemeliharaan</th>
                             <th>Aksi</th>
                         </tr>
@@ -34,15 +33,47 @@
                                 <td>{{ $row->jenis_pemeliharaan }}</td>
                                 <td>{{ $row->asset->nama_aset ?? 'N/A' }}</td>
                                 <td>{{ $row->ruanganAsal->nama_ruangan ?? 'N/A' }}</td>
-                                <td>{{ $row->jumlah_pelihara }}</td>
                                 <td>{{ $row->biaya_pemeliharaan }}</td>
                                 <td>
                                     <a href="{{ route('pemeliharaan.edit', $row->id) }}" class="btn btn-warning">Edit</a>
-                                    <a href="{{ route('pemeliharaan.hapus', $row->id) }}" class="btn btn-danger">Hapus</a>
+                                    <button class="btn btn-danger" data-toggle="modal"
+                                        data-target="#hapusModal{{ $row->id }}">Hapus</button>
                                     <button type="button" class="btn btn-info" data-toggle="modal"
                                         data-target="#detailModal{{ $row->id }}">Detail</button>
                                 </td>
                             </tr>
+
+                            {{-- Modal Hapus --}}
+                            <div class="modal fade" id="hapusModal{{ $row->id }}" tabindex="-1" role="dialog"
+                                aria-labelledby="hapusModalLabel{{ $row->id }}" aria-hidden="true">
+                                <div class="modal-dialog" role="document">
+                                    <div class="modal-content">
+                                        <div class="modal-header">
+                                            <h5 class="modal-title" id="hapusModalLabel{{ $row->id }}">Konfirmasi
+                                                Hapus</h5>
+                                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                                <span aria-hidden="true">&times;</span>
+                                            </button>
+                                        </div>
+                                        <div class="modal-body">
+                                            Apakah anda yakin ingin menghapus data mutasi
+                                            "{{ $row->asset->nama_aset ?? 'N/A' }}"?
+                                        </div>
+                                        <div class="modal-footer">
+                                            <button type="button" class="btn btn-secondary"
+                                                data-dismiss="modal">Batal</button>
+                                            <form action="{{ route('mutasi.hapus', $row->id) }}" method="POST"
+                                                class="d-inline">
+                                                @csrf
+                                                @method('DELETE')
+                                                <button type="submit" class="btn btn-danger">Hapus</button>
+                                            </form>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            {{-- Modal Detail --}}
                             <div class="modal fade" id="detailModal{{ $row->id }}" tabindex="-1" role="dialog"
                                 aria-labelledby="detailModalLabel{{ $row->id }}" aria-hidden="true">
                                 <div class="modal-dialog" role="document">

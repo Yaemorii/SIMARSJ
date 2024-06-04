@@ -59,11 +59,6 @@
                                 @endforeach
                             </select>
                         </div>
-                        <div class="form-group">
-                            <label for="jumlah_dipinjam">Jumlah Aset dipinjam</label>
-                            <input type="number" class="form-control" id="jumlah_dipinjam" name="jumlah_dipinjam"
-                                value="{{ isset($peminjaman) ? $peminjaman->jumlah_dipinjam : '' }}">
-                        </div>
                     </div>
                     <div class="card-footer d-flex justify-content-end">
                         <a href="{{ url()->previous() }}" class="btn btn-secondary mr-2">Kembali</a>

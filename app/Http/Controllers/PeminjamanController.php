@@ -28,7 +28,6 @@ class PeminjamanController extends Controller
             'tgl_pinjam'      => $request->tgl_pinjam,
             'tgl_kembali'     => $request->tgl_kembali,
             'aset_dipinjam'   => $request->aset_dipinjam,
-            'jumlah_dipinjam' => $request->jumlah_dipinjam,
             'peminjam'        => $request->peminjam,
             'ruangan_peminjam'=> $request->ruangan_peminjam,
         ];
@@ -52,7 +51,6 @@ class PeminjamanController extends Controller
             'tgl_pinjam'      => $request->tgl_pinjam,
             'tgl_kembali'     => $request->tgl_kembali,
             'aset_dipinjam'   => $request->aset_dipinjam,
-            'jumlah_dipinjam' => $request->jumlah_dipinjam,
             'peminjam'        => $request->peminjam,
             'ruangan_peminjam'=> $request->ruangan_peminjam,
         ];

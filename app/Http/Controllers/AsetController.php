@@ -38,9 +38,9 @@ class AsetController extends Controller
             'polisi' => 'required|string|max:255',
             'bpkb' => 'required|string|max:255',
             'gambar_aset' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048',
-            'jumlah' => 'required|integer',
             'kondisi' => 'required|string|max:255',
             'harga' => 'required|string|max:255',
+            'keterangan' => 'required|string|max:255',
         ], [
             'gambar_aset.max' => 'Gambar yang diinput tidak boleh melebihi 2MB',
         ]);
@@ -66,9 +66,9 @@ class AsetController extends Controller
             'mesin' => $request->mesin,
             'polisi' => $request->polisi,
             'bpkb' => $request->bpkb,
-            'jumlah' => $request->jumlah,
             'kondisi' => $request->kondisi,
             'harga' => $request->harga,
+            'keterangan' => $request->keterangan,
         ];
 
         Aset::create($data);
@@ -101,9 +101,9 @@ class AsetController extends Controller
             'polisi' => 'required|string|max:255',
             'bpkb' => 'required|string|max:255',
             'gambar_aset' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048',
-            'jumlah' => 'required|integer',
             'kondisi' => 'required|string|max:255',
             'harga' => 'required|string|max:255',
+            'keterangan' => 'required|string|max:255',
         ], [
             'gambar_aset.max' => 'Gambar yang diinput tidak boleh melebihi 2MB',
         ]);
@@ -125,9 +125,9 @@ class AsetController extends Controller
             'mesin' => $request->mesin,
             'polisi' => $request->polisi,
             'bpkb' => $request->bpkb,
-            'jumlah' => $request->jumlah,
             'kondisi' => $request->kondisi,
             'harga' => $request->harga,
+            'keterangan' => $request->keterangan,
         ];
 
         if ($request->hasFile('gambar_aset')) {
@@ -152,6 +152,6 @@ class AsetController extends Controller
 
         $aset->delete();
 
-        return redirect()->route('aset')->with('warning', 'Data berhasil dihapus');
+        return redirect()->route('aset')->with('danger', 'Data berhasil dihapus');
     }
 }

@@ -54,6 +54,12 @@
             <span>Ruangan</span></a>
     </li>
 
+    <li class="nav-item">
+        <a class="nav-link" href="#">
+            <i class="fa-solid fa-users"></i>
+            <span>Kepemilikan Aset</span></a>
+    </li>
+
     <li class="nav-item active">
         <a class="nav-link menu-header">
             <i class="fa-solid"></i>

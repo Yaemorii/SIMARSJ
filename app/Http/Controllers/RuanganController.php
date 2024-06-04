@@ -22,6 +22,8 @@ class RuanganController extends Controller
     public function simpan(Request $request)
     {
         $ruangan = [
+            'no_gedung'        => $request->no_gedung,
+            'no_lantai'        => $request->no_lantai,
             'no_ruangan'        => $request->no_ruangan,
             'nama_ruangan'      => $request->nama_ruangan,
             'penanggung_jawab'  => $request->penanggung_jawab,
@@ -43,6 +45,8 @@ class RuanganController extends Controller
     public function update($id, Request $request)
     {
         $ruangan = [
+            'no_gedung'        => $request->no_gedung,
+            'no_lantai'        => $request->no_lantai,
             'no_ruangan'        => $request->no_ruangan,
             'nama_ruangan'      => $request->nama_ruangan,
             'penanggung_jawab'  => $request->penanggung_jawab,

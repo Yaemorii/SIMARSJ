@@ -62,7 +62,9 @@ class MutasiController extends Controller
 
     public function hapus($id)
     {
-        Mutasi::find($id)->delete();
-        return redirect()->route('mutasi');
+        $mutasi = Mutasi::findOrFail($id);
+        $mutasi->delete();
+
+        return redirect()->route('mutasi')->with('danger', 'Data berhasil dihapus');
     }
 }

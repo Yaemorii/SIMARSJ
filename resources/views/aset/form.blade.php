@@ -52,7 +52,7 @@
                                 value="{{ isset($aset) ? $aset->merek : '' }}">
                         </div>
                         <div class="form-group">
-                            <label for="ukuran">Ukuran</label>
+                            <label for="ukuran">Ukuran / CC</label>
                             <input type="text" class="form-control" id="ukuran" name="ukuran"
                                 value="{{ isset($aset) ? $aset->ukuran : '' }}">
                         </div>
@@ -140,19 +140,31 @@
                             </div>
                         </div>
                         <div class="form-group">
-                            <label for="jumlah">Jumlah</label>
-                            <input type="number" class="form-control" id="jumlah" name="jumlah"
-                                value="{{ isset($aset) ? $aset->jumlah : '' }}">
-                        </div>
-                        <div class="form-group">
                             <label for="kondisi">Kondisi</label>
-                            <input type="text" class="form-control" id="kondisi" name="kondisi"
-                                value="{{ isset($aset) ? $aset->kondisi : '' }}">
+                            <select class="form-control" id="kondisi" name="kondisi">
+                                <option disabled {{ !isset($aset) ? 'selected' : '' }}>Pilih Kondisi</option>
+                                <option value="Baik" {{ isset($aset) && $aset->satuan == 'Baik' ? 'selected' : '' }}>Baik
+                                </option>
+                                <option value="Rusak Ringan" {{ isset($aset) && $aset->satuan == 'Rusak Ringan' ? 'selected' : '' }}>Rusak Ringan
+                                </option>
+                                <option value="Rusak Berat" {{ isset($aset) && $aset->satuan == 'Rusak Berat' ? 'selected' : '' }}>Rusak Berat
+                                </option>
+                            </select>
                         </div>
                         <div class="form-group">
                             <label for="harga">Harga Satuan</label>
-                            <input type="number" class="form-control" id="harga" name="harga"
-                                value="{{ isset($aset) ? $aset->harga : '' }}">
+                            <div class="input-group">
+                                <div class="input-group-prepend">
+                                    <span class="input-group-text" id="basic-addon1">Rp.</span>
+                                </div>
+                                <input type="text" class="form-control" id="harga" name="harga"
+                                    value="{{ isset($aset) ? $aset->harga : '' }}">
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="keterangan">Keterangan</label>
+                            <input type="text" class="form-control" id="keterangan" name="keterangan"
+                                value="{{ isset($aset) ? $aset->keterangan : '' }}">
                         </div>
                         <div class="form-group">
                             <label for="gambar_aset">Gambar Aset</label>

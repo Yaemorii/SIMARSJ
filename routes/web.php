@@ -7,6 +7,7 @@ use App\Http\Controllers\PemeliharaanController;
 use App\Http\Controllers\PengadaanController;
 use App\Http\Controllers\PeminjamanController;
 use App\Http\Controllers\RuanganController;
+use App\Http\Controllers\KepemilikanController;
 
 
 /*
@@ -34,7 +35,7 @@ Route::controller(AsetController::class)->prefix('aset')->group(function () {
     Route::post('tambah','simpan')->name('aset.tambah.simpan');
     Route::get('edit/{id}','edit')->name('aset.edit');
     Route::put('edit/{id}','update')->name('aset.tambah.update');
-    Route::get('hapus/{id}','hapus')->name('aset.hapus');
+    Route::delete('hapus/{id}','hapus')->name('aset.hapus');
 });
 
 Route::controller(MutasiController::class)->prefix('mutasi')->group(function () {
@@ -43,7 +44,7 @@ Route::controller(MutasiController::class)->prefix('mutasi')->group(function () 
     Route::post('tambah','simpan')->name('mutasi.tambah.simpan');
     Route::get('edit/{id}','edit')->name('mutasi.edit');
     Route::put('edit/{id}','update')->name('mutasi.tambah.update');
-    Route::get('hapus/{id}','hapus')->name('mutasi.hapus');
+    Route::delete('hapus/{id}', 'hapus')->name('mutasi.hapus');
 });
 
 Route::controller(PemeliharaanController::class)->prefix('pemeliharaan')->group(function () {
@@ -52,7 +53,7 @@ Route::controller(PemeliharaanController::class)->prefix('pemeliharaan')->group(
     Route::post('tambah','simpan')->name('pemeliharaan.tambah.simpan');
     Route::get('edit/{id}','edit')->name('pemeliharaan.edit');
     Route::put('edit/{id}','update')->name('pemeliharaan.tambah.update');
-    Route::get('hapus/{id}','hapus')->name('pemeliharaan.hapus');
+    Route::delete('hapus/{id}', 'hapus')->name('pemeliharaan.hapus');
 });
 
 Route::controller(PeminjamanController::class)->prefix('peminjaman')->group(function () {

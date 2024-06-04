@@ -72,14 +72,14 @@
                             </select>
                         </div>
                         <div class="form-group">
-                            <label for="jumlah_pelihara">Jumlah aset yang dipelihara</label>
-                            <input type="number" class="form-control" id="jumlah_pelihara" name="jumlah_pelihara"
-                                value="{{ isset($pemeliharaan) ? $pemeliharaan->jumlah_pelihara : '' }}">
-                        </div>
-                        <div class="form-group">
                             <label for="biaya_pemeliharaan">Biaya Pemeliharaan</label>
-                            <input type="text" class="form-control" id="biaya_pemeliharaan" name="biaya_pemeliharaan"
-                                value="{{ isset($pemeliharaan) ? $pemeliharaan->biaya_pemeliharaan : '' }}">
+                            <div class="input-group">
+                                <div class="input-group-prepend">
+                                    <span class="input-group-text" id="basic-addon1">Rp.</span>
+                                </div>
+                                <input type="text" class="form-control" id="biaya_pemeliharaan" name="biaya_pemeliharaan"
+                                    value="{{ isset($pemeliharaan) ? $pemeliharaan->biaya_pemeliharaan : '' }}">
+                            </div>
                         </div>
                     </div>
                     <div class="card-footer d-flex justify-content-end">

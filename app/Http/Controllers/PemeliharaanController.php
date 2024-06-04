@@ -29,7 +29,6 @@ class PemeliharaanController extends Controller
             'jenis_pemeliharaan'  => $request->jenis_pemeliharaan,
             'aset_pelihara'       => $request->aset_pelihara,
             'ruangan'             => $request->ruangan,
-            'jumlah_pelihara'     => $request->jumlah_pelihara,
             'biaya_pemeliharaan'  => $request->biaya_pemeliharaan,
         ];
 
@@ -53,7 +52,6 @@ class PemeliharaanController extends Controller
             'jenis_pemeliharaan'  => $request->jenis_pemeliharaan,
             'aset_pelihara'       => $request->aset_pelihara,
             'ruangan'             => $request->ruangan,
-            'jumlah_pelihara'     => $request->jumlah_pelihara,
             'biaya_pemeliharaan'  => $request->biaya_pemeliharaan,
         ];
         Pemeliharaan::find($id)->update($pemeliharaan);
@@ -63,8 +61,9 @@ class PemeliharaanController extends Controller
 
     public function hapus($id)
     {
-        Pemeliharaan::find($id)->delete();
-        
-        return redirect()->route('pemeliharaan');
+        $pemeliharaan = Pemeliharaan::findOrFail($id);
+        $pemeliharaan->delete();
+
+        return redirect()->route('pemeliharaan')->with('danger', 'Data berhasil dihapus');
     }
 }

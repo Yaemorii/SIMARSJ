@@ -20,7 +20,6 @@
                             <th>Tanggal Pengembalian</th>
                             <th>Aset yang dipinjam</th>
                             <th>Merek</th>
-                            <th>Jumlah</th>
                             <th>Peminjam</th>
                             <th>Ruangan Peminjam</th>
                             <th>Aksi</th>
@@ -35,7 +34,6 @@
                                 <td>{{ $row->tgl_kembali }}</td>
                                 <td>{{ $row->asset->nama_aset ?? 'N/A' }}</td>
                                 <td>{{ $row->asset->merek ?? 'N/A' }}</td>
-                                <td>{{ $row->jumlah_dipinjam }}</td>
                                 <td>{{ $row->peminjam }}</td>
                                 <td>{{ $row->ruanganAsal->nama_ruangan ?? 'N/A' }}</td>
                                 <td>

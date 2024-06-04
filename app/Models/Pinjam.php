@@ -9,7 +9,7 @@ class Pinjam extends Model
 {
     use HasFactory;
 
-    protected $fillable = ['tgl_pinjam', 'tgl_kembali', 'aset_dipinjam', 'jumlah_dipinjam', 'peminjam', 'ruangan_peminjam' ];
+    protected $fillable = ['tgl_pinjam', 'tgl_kembali', 'aset_dipinjam', 'peminjam', 'ruangan_peminjam' ];
 
     public function asset()
     {
