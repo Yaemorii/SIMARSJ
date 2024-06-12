@@ -24,6 +24,24 @@
             <span>Dashboard</span></a>
     </li>
 
+    <!-- Master Menu -->
+    <li class="nav-item">
+        <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseMaster" aria-expanded="true" aria-controls="collapseMaster">
+            <i class="fa-solid fa-folder"></i>
+            <span>Master</span>
+        </a>
+        <div id="collapseMaster" class="collapse" aria-labelledby="headingMaster" data-parent="#accordionSidebar">
+            <div class="bg-white py-2 collapse-inner rounded">
+                <h6 class="collapse-header">Master Data:</h6>
+                <a class="collapse-item" href="#">Kategori Aset</a>
+                <a class="collapse-item" href="#">Sumber Dana</a>
+                <a class="collapse-item" href="#">Satuan</a>
+                <a class="collapse-item" href="#">Kondisi</a>
+                <a class="collapse-item" href="#">Jenis Pemeliharaan</a>
+            </div>
+        </div>
+    </li>
+
     <li class="nav-item">
         <a class="nav-link" href="{{ route('aset') }}">
             <i class="fa-solid fa-boxes-stacked"></i>

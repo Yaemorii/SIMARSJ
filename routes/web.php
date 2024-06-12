@@ -7,7 +7,7 @@ use App\Http\Controllers\PemeliharaanController;
 use App\Http\Controllers\PengadaanController;
 use App\Http\Controllers\PeminjamanController;
 use App\Http\Controllers\RuanganController;
-use App\Http\Controllers\KepemilikanController;
+use App\Http\Controllers\MilikController;
 
 
 /*
@@ -72,4 +72,13 @@ Route::controller(RuanganController::class)->prefix('ruangan')->group(function (
     Route::get('edit/{id}','edit')->name('ruangan.edit');
     Route::put('edit/{id}','update')->name('ruangan.tambah.update');
     Route::get('hapus/{id}','hapus')->name('ruangan.hapus');
+});
+
+Route::controller(MilikController::class)->prefix('milik')->group(function () {
+    Route::get('','index')->name('milik');
+    Route::get('tambah','tambah')->name('milik.tambah');
+    Route::post('tambah','simpan')->name('milik.tambah.simpan');
+    Route::get('edit/{id}','edit')->name('milik.edit');
+    Route::put('edit/{id}','update')->name('milik.tambah.update');
+    Route::delete('hapus/{id}', 'hapus')->name('milik.hapus');
 });
