@@ -16,6 +16,11 @@ class Mutasi extends Model
         return $this->belongsTo(Aset::class, 'aset_mutasi');
     }
 
+    public function jenisMutasi()
+    {
+        return $this->belongsTo(JenisMutasi::class, 'jenis_mutasi');
+    }
+
     public function ruanganAsal()
     {
         return $this->belongsTo(Ruangan::class, 'ruangan_asal');
@@ -26,4 +31,3 @@ class Mutasi extends Model
         return $this->belongsTo(Ruangan::class, 'tujuan');
     }
 }
-

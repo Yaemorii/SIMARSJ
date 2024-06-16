@@ -11,7 +11,7 @@ class PeminjamanController extends Controller
 {
     public function index ()
     {
-        $peminjaman = Pinjam::with(['asset', 'ruanganAsal'])->get();
+        $peminjaman = Pinjam::with(['asset', 'ruanganAsal', 'asset.kategoriAset', 'asset.kondisiAset', 'asset.satuanAset', 'asset.sumberDana'])->get();
         return view('peminjaman.index', ['data' => $peminjaman]);
     }
 

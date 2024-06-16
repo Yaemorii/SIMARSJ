@@ -71,16 +71,17 @@
                                                     <p><strong>Kode Aset:</strong> {{ $row->asset->kode_aset }}</p>
                                                     <p><strong>No.Register:</strong> {{ $row->asset->no_register }}</p>
                                                     <p><strong>Merek:</strong> {{ $row->asset->merek }}</p>
-                                                    <p><strong>Kategori Aset:</strong> {{ $row->asset->kategori_aset }}</p>
-                                                    <p><strong>Satuan:</strong> {{ $row->asset->satuan }}</p>
-                                                    @if ($row->asset->kategori_aset == 'Kendaraan')
+                                                    <p><strong>Tahun Pembelian:</strong> {{ $row->asset->tahun_pembelian }}</p>
+                                                    <p><strong>Kategori Aset:</strong> {{ $row->asset->kategoriAset->kategori }}</p>
+                                                    <p><strong>Satuan:</strong> {{ $row->asset->satuanAset->nama_satuan }}</p>
+                                                    {{-- @if ($row->asset->kategori_aset == 'Kendaraan')
                                                         <p><strong>Pabrik:</strong> {{ $row->asset->pabrik }}</p>
                                                         <p><strong>No.Rangka:</strong> {{ $row->asset->rangka }}</p>
                                                         <p><strong>No.Mesin:</strong> {{ $row->asset->mesin }}</p>
                                                         <p><strong>No.Polisi:</strong> {{ $row->asset->polisi }}</p>
                                                         <p><strong>No.BPKB:</strong> {{ $row->asset->bpkb }}</p>
-                                                    @endif
-                                                    <p><strong>Kondisi:</strong> {{ $row->asset->kondisi }}</p>
+                                                    @endif --}}
+                                                    <p><strong>Kondisi:</strong> {{ $row->asset->kondisiAset->nama_kondisi }}</p>
                                                     <p><strong>Nama Peminjam:</strong> {{ $row->peminjam }}
                                                     <p><strong>Ruangan Peminjam:</strong>
                                                         {{ $row->ruanganAsal->nama_ruangan ?? 'N/A' }}</p>

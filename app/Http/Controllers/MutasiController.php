@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Mutasi;
 use App\Models\Aset;
+use App\Models\JenisMutasi;
 use App\Models\Ruangan;
 use Illuminate\Http\Request;
 
@@ -11,15 +12,16 @@ class MutasiController extends Controller
 {
     public function index()
     {
-        $mutasi = Mutasi::with(['asset', 'ruanganAsal', 'ruanganTujuan'])->get();
+        $mutasi = Mutasi::with(['asset', 'jenisMutasi', 'ruanganAsal', 'ruanganTujuan', 'asset.kategoriAset', 'asset.kondisiAset', 'asset.satuanAset', 'asset.sumberDana', 'jenisMutasi', 'ruanganAsal', 'ruanganTujuan'])->get();
         return view('mutasi.index', ['data' => $mutasi]);
     }
 
     public function tambah()
     {
         $asets = Aset::all();  
+        $jenmutasi = JenisMutasi::all();  
         $ruangan = Ruangan::all();  // Retrieve all rooms
-        return view('mutasi.form', ['asets' => $asets, 'ruangan' => $ruangan]);
+        return view('mutasi.form', ['asets' => $asets, 'jenmutasi' => $jenmutasi, 'ruangan' => $ruangan]);
     }
 
     public function simpan(Request $request)
@@ -41,8 +43,9 @@ class MutasiController extends Controller
     {
         $mutasi = Mutasi::where('id', $id)->first();
         $asets = Aset::all();
+        $jenmutasi = JenisMutasi::all();  
         $ruangan = Ruangan::all();
-        return view('mutasi.form', ['mutasi' => $mutasi, 'asets' => $asets, 'ruangan' => $ruangan]);
+        return view('mutasi.form', ['mutasi' => $mutasi, 'asets' => $asets, 'jenmutasi' => $jenmutasi, 'ruangan' => $ruangan]);
     }
 
     public function update($id, Request $request)

@@ -32,7 +32,7 @@
                             <tr>
                                 <td>{{ $no++ }}</td>
                                 <td>{{ $row->tgl_mutasi }}</td>
-                                <td>{{ $row->jenis_mutasi }}</td>
+                                <td>{{ $row->jenisMutasi->kode_mutasi ?? 'N/A' }}</td>
                                 <td>{{ $row->asset->nama_aset ?? 'N/A' }}</td>
                                 <td>{{ $row->asset->merek ?? 'N/A' }}</td>
                                 <td>{{ $row->ruanganAsal->nama_ruangan ?? 'N/A' }}</td>
@@ -74,16 +74,19 @@
                                                     <p><strong>Kode Aset:</strong> {{ $row->asset->kode_aset }}</p>
                                                     <p><strong>No. Register:</strong> {{ $row->asset->no_register }}</p>
                                                     <p><strong>Merek:</strong> {{ $row->asset->merek }}</p>
-                                                    <p><strong>Kategori Aset:</strong> {{ $row->asset->kategori_aset }}</p>
-                                                    <p><strong>Satuan:</strong> {{ $row->asset->satuan }}</p>
-                                                    @if ($row->asset->kategori_aset == 'Kendaraan')
+                                                    <p><strong>Kategori Aset:</strong> {{ $row->asset->kategoriAset->kategori ?? 'N/A' }}</p>
+                                                    <p><strong>Satuan:</strong> {{ $row->asset->satuanAset->nama_satuan ?? 'N/A' }}</p>
+                                                    <p><strong>Tahun Pembelian:</strong> {{ $row->asset->tahun_pembelian }}</p>
+                                                    <p><strong>Sumber Dana:</strong> {{ $row->asset->sumberDana->kode_sumberdana ?? 'N/A' }}</p>
+                                                    {{-- @if ($row->asset->kategori_aset == 'Kendaraan')
                                                         <p><strong>Pabrik:</strong> {{ $row->asset->pabrik }}</p>
                                                         <p><strong>No.Rangka:</strong> {{ $row->asset->rangka }}</p>
                                                         <p><strong>No.Mesin:</strong> {{ $row->asset->mesin }}</p>
                                                         <p><strong>No.Polisi:</strong> {{ $row->asset->polisi }}</p>
                                                         <p><strong>No.BPKB:</strong> {{ $row->asset->bpkb }}</p>
-                                                    @endif
-                                                    <p><strong>Kondisi:</strong> {{ $row->asset->kondisi }}</p>
+                                                    @endif --}}
+                                                    <p><strong>Kondisi:</strong> {{ $row->asset->kondisiAset->nama_kondisi ?? 'N/A'}}</p>
+                                                    <p><strong>Jenis Mutasi:</strong> {{ $row->jenisMutasi->jenismutasi }}</p>
                                                     <p><strong>Ruangan Asal:</strong>
                                                         {{ $row->ruanganAsal->nama_ruangan ?? 'N/A' }}</p>
                                                     <p><strong>Ruangan Tujuan:</strong>

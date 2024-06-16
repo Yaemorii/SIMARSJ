@@ -25,52 +25,37 @@
                         </div>
                         <div class="form-group">
                             <label for="jenis_pemeliharaan">Jenis Pemeliharaan</label>
-                            <select class="form-control" id="jenis_pemeliharaan" name="jenis_pemeliharaan">
-                                <option disabled {{ !isset($pemeliharaan) ? 'selected' : '' }}>Pilih Jenis Pemeliharaan
-                                </option>
-                                <option value="Rutin"
-                                    {{ isset($pemeliharaan) && $pemeliharaan->jenis_pemeliharaan == 'Rutin' ? 'selected' : '' }}>
-                                    Pemeliharaan Rutin</option>
-                                <option value="Preventif"
-                                    {{ isset($pemeliharaan) && $pemeliharaan->jenis_pemeliharaan == 'Preventif' ? 'selected' : '' }}>
-                                    Pemeliharaan Preventif</option>
-                                <option value="Korektif"
-                                    {{ isset($pemeliharaan) && $pemeliharaan->jenis_pemeliharaan == 'Korektif' ? 'selected' : '' }}>
-                                    Pemeliharaan Korektif</option>
-                                <option value="Darurat"
-                                    {{ isset($pemeliharaan) && $pemeliharaan->jenis_pemeliharaan == 'Darurat' ? 'selected' : '' }}>
-                                    Pemeliharaan Darurat</option>
-                                <option value="Prediktif"
-                                    {{ isset($pemeliharaan) && $pemeliharaan->jenis_pemeliharaan == 'Prediktif' ? 'selected' : '' }}>
-                                    Pemeliharaan Prediktif</option>
-                            </select>
-                        </div>
-                        <div class="form-group">
-                            <label for="aset_pelihara">Aset yang dipelihara</label>
-                            <select class="form-control" id="aset_pelihara" name="aset_pelihara"
-                                value="{{ isset($pemeliharaan) ? $pemeliharaan->aset_pelihara : '' }}">
-                                <option disabled {{ !isset($pemeliharaan) ? 'selected' : '' }}>Pilih Aset</option>
-                                @foreach ($asets as $aset)
-                                    <option value="{{ $aset->id }}"
-                                        {{ isset($pemeliharaan) && $pemeliharaan->aset_pelihara == $aset->id ? 'selected' : '' }}>
-                                        {{ $aset->nama_aset }} - {{ $aset->merek }}
+                            <select class="form-control select2" id="jenis_pemeliharaan" name="jenis_pemeliharaan">
+                                <option disabled {{ !isset($pemeliharaan) ? 'selected' : '' }}>Pilih Jenis Pemeliharaan</option>
+                                @foreach($jenpel as $j)
+                                    <option value="{{ $j->id }}" {{ isset($pemeliharaan) && $pemeliharaan->jenis_pemeliharaan == $j->id ? 'selected' : '' }}>
+                                        {{ $j->kode_pemeliharaan }} - {{ $j->jenispemeliharaan }}
                                     </option>
                                 @endforeach
                             </select>
                         </div>
-                        <div class="form-group">
-                            <label for="ruangan">Ruangan</label>
-                            <select class="form-control" id="ruangan" name="ruangan"
-                                value="{{ isset($pemeliharaan) ? $pemeliharaan->ruangan : '' }}">
-                                <option disabled {{ !isset($pemeliharaan) ? 'selected' : '' }}>Pilih Ruangan</option>
-                                @foreach ($ruangan as $r)
-                                    <option value="{{ $r->id }}"
-                                        {{ isset($pemeliharaan) && $pemeliharaan->ruangan == $r->id ? 'selected' : '' }}>
-                                        {{ $r->nama_ruangan }} - {{ $r->penanggung_jawab }}
-                                    </option>
-                                @endforeach
-                            </select>
-                        </div>
+                            <div class="form-group">
+                                <label for="aset_pelihara">Aset yang dipelihara</label>
+                                <select class="form-control select2" id="aset_pelihara" name="aset_pelihara">
+                                    <option disabled {{ !isset($pemeliharaan) ? 'selected' : '' }}>Pilih Aset</option>
+                                    @foreach($asets as $aset)
+                                        <option value="{{ $aset->id }}" {{ isset($pemeliharaan) && $pemeliharaan->aset_pelihara == $aset->id ? 'selected' : '' }}>
+                                            {{ $aset->nama_aset }} - {{ $aset->merek }} - {{ $aset->kode_aset }}
+                                        </option>
+                                    @endforeach
+                                </select>
+                            </div>
+                            <div class="form-group">
+                                <label for="ruangan">Ruangan</label>
+                                <select class="form-control select2" id="ruangan" name="ruangan">
+                                    <option disabled {{ !isset($pemeliharaan) ? 'selected' : '' }}>Pilih Ruangan</option>
+                                    @foreach($ruangan as $r)
+                                        <option value="{{ $r->id }}" {{ isset($pemeliharaan) && $pemeliharaan->ruangan == $r->id ? 'selected' : '' }}>
+                                            {{ $r->nama_ruangan }} - {{ $r->penanggung_jawab }}
+                                        </option>
+                                    @endforeach
+                                </select>
+                            </div>
                         <div class="form-group">
                             <label for="biaya_pemeliharaan">Biaya Pemeliharaan</label>
                             <div class="input-group">

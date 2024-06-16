@@ -57,40 +57,14 @@
                                 value="{{ isset($aset) ? $aset->ukuran : '' }}">
                         </div>
                         <div class="form-group">
-                            <label for="kategori_aset">Kategori Aset</label>
-                            <select class="form-control" id="kategori_aset" name="kategori_aset">
-                                <option disabled {{ !isset($aset) ? 'selected' : '' }}>Pilih Kategori Aset</option>
-                                <option value="Elektronik"
-                                    {{ isset($aset) && $aset->kategori_aset == 'Elektronik' ? 'selected' : '' }}>Elektronik
-                                </option>
-                                <option value="ATK"
-                                    {{ isset($aset) && $aset->kategori_aset == 'ATK' ? 'selected' : '' }}>Alat Tulis Kantor
-                                </option>
-                                <option value="Furnitur"
-                                    {{ isset($aset) && $aset->kategori_aset == 'Furnitur' ? 'selected' : '' }}>Furnitur
-                                </option>
-                                <option value="Kendaraan"
-                                    {{ isset($aset) && $aset->kategori_aset == 'Kendaraan' ? 'selected' : '' }}>Kendaraan
-                                </option>
-                                <option value="Peralatan"
-                                    {{ isset($aset) && $aset->kategori_aset == 'Peralatan' ? 'selected' : '' }}>Peralatan
-                                </option>
-                            </select>
-                        </div>
-                        <div class="form-group">
                             <label for="satuan">Satuan</label>
-                            <select class="form-control" id="satuan" name="satuan">
+                            <select class="form-control select2" id="satuan" name="satuan">
                                 <option disabled {{ !isset($aset) ? 'selected' : '' }}>Pilih Satuan</option>
-                                <option value="Unit" {{ isset($aset) && $aset->satuan == 'Unit' ? 'selected' : '' }}>Unit
-                                </option>
-                                <option value="Pack" {{ isset($aset) && $aset->satuan == 'Pack' ? 'selected' : '' }}>Pack
-                                </option>
-                                <option value="Buah" {{ isset($aset) && $aset->satuan == 'Buah' ? 'selected' : '' }}>Buah
-                                </option>
-                                <option value="Pasang" {{ isset($aset) && $aset->satuan == 'Pasang' ? 'selected' : '' }}>
-                                    Pasang</option>
-                                <option value="Lembar" {{ isset($aset) && $aset->satuan == 'Lembar' ? 'selected' : '' }}>
-                                    Lembar</option>
+                                @foreach($satuans as $satuan)
+                                    <option value="{{ $satuan->id }}" {{ isset($aset) && $aset->kategori_aset == $satuan->id ? 'selected' : '' }}>
+                                        {{ $satuan->kode_satuan }} - {{ $satuan->nama_satuan }}
+                                    </option>
+                                @endforeach
                             </select>
                         </div>
                         <div class="form-group">
@@ -99,20 +73,18 @@
                                 value="{{ isset($aset) ? $aset->tahun_pembelian : '' }}">
                         </div>
                         <div class="form-group">
-                            <label for="sumber_dana">Sumber Dana</label>
-                            <select class="form-control" id="sumber_dana" name="sumber_dana">
-                                <option disabled {{ !isset($aset) ? 'selected' : '' }}>Pilih Sumber Dana</option>
-                                <option value="APBN"
-                                    {{ isset($aset) && $aset->sumber_dana == 'APBN' ? 'selected' : '' }}>APBN</option>
-                                <option value="APBD"
-                                    {{ isset($aset) && $aset->sumber_dana == 'APBD' ? 'selected' : '' }}>APBD</option>
-                                <option value="Hibah"
-                                    {{ isset($aset) && $aset->sumber_dana == 'Hibah' ? 'selected' : '' }}>Hibah</option>
-                                <option value="Donasi"
-                                    {{ isset($aset) && $aset->sumber_dana == 'Donasi' ? 'selected' : '' }}>Donasi</option>
+                            <label for="kategori_aset">Kategori Aset</label>
+                            <select class="form-control select2" id="kategori_aset" name="kategori_aset">
+                                <option disabled {{ !isset($aset) ? 'selected' : '' }}>Pilih Kategori</option>
+                                @foreach($kategoris as $kategori)
+                                    <option value="{{ $kategori->id }}" {{ isset($aset) && $aset->kategori_aset == $kategori->id ? 'selected' : '' }}>
+                                        {{ $kategori->kode_kategori }} - {{ $kategori->kategori }}
+                                    </option>
+                                @endforeach
                             </select>
                         </div>
-                        <div id="form-kendaraan" style="display: none;">
+                        
+                        {{-- <div id="form-kendaraan" style="display: none;">
                             <div class="form-group">
                                 <label for="pabrik">Pabrik</label>
                                 <input type="text" class="form-control" id="pabrik" name="pabrik"
@@ -138,19 +110,7 @@
                                 <input type="text" class="form-control" id="bpkb" name="bpkb"
                                     data-value="{{ isset($aset) ? $aset->bpkb : '' }}">
                             </div>
-                        </div>
-                        <div class="form-group">
-                            <label for="kondisi">Kondisi</label>
-                            <select class="form-control" id="kondisi" name="kondisi">
-                                <option disabled {{ !isset($aset) ? 'selected' : '' }}>Pilih Kondisi</option>
-                                <option value="Baik" {{ isset($aset) && $aset->satuan == 'Baik' ? 'selected' : '' }}>Baik
-                                </option>
-                                <option value="Rusak Ringan" {{ isset($aset) && $aset->satuan == 'Rusak Ringan' ? 'selected' : '' }}>Rusak Ringan
-                                </option>
-                                <option value="Rusak Berat" {{ isset($aset) && $aset->satuan == 'Rusak Berat' ? 'selected' : '' }}>Rusak Berat
-                                </option>
-                            </select>
-                        </div>
+                        </div> --}}
                         <div class="form-group">
                             <label for="harga">Harga Satuan</label>
                             <div class="input-group">
@@ -160,6 +120,28 @@
                                 <input type="text" class="form-control" id="harga" name="harga"
                                     value="{{ isset($aset) ? $aset->harga : '' }}">
                             </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="sumber_dana">Sumber Dana</label>
+                            <select class="form-control select2" id="sumber_dana" name="sumber_dana">
+                                <option disabled {{ !isset($aset) ? 'selected' : '' }}>Pilih Kondisi</option>
+                                @foreach($sumbers as $sumber)
+                                    <option value="{{ $sumber->id }}" {{ isset($aset) && $aset->sumber_dana == $sumber->id ? 'selected' : '' }}>
+                                        {{ $sumber->kode_sumberdana }} - {{ $sumber->sumberdana }}
+                                    </option>
+                                @endforeach
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label for="kondisi">Kondisi Aset</label>
+                            <select class="form-control select2" id="kondisi" name="kondisi">
+                                <option disabled {{ !isset($aset) ? 'selected' : '' }}>Pilih Kondisi</option>
+                                @foreach($kondisis as $kondisi)
+                                    <option value="{{ $kondisi->id }}" {{ isset($aset) && $aset->kondisi == $kondisi->id ? 'selected' : '' }}>
+                                        {{ $kondisi->kode_kondisi }} - {{ $kondisi->nama_kondisi }}
+                                    </option>
+                                @endforeach
+                            </select>
                         </div>
                         <div class="form-group">
                             <label for="keterangan">Keterangan</label>
@@ -182,33 +164,10 @@
             </div>
         </div>
     </form>
-
-    <script>
-        document.addEventListener('DOMContentLoaded', function() {
-            const kategoriAset = document.getElementById('kategori_aset');
-            const formKendaraan = document.getElementById('form-kendaraan');
-            const kendaraanFields = ['pabrik', 'rangka', 'mesin', 'polisi', 'bpkb'];
-
-            function toggleKendaraanFields() {
-                if (kategoriAset.value === 'Kendaraan') {
-                    formKendaraan.style.display = 'block';
-                    kendaraanFields.forEach(id => {
-                        document.getElementById(id).value = document.getElementById(id).getAttribute(
-                            'data-value');
-                    });
-                } else {
-                    formKendaraan.style.display = 'none';
-                    kendaraanFields.forEach(id => {
-                        document.getElementById(id).value = '-';
-                    });
-                }
-            }
-
-            kategoriAset.addEventListener('change', toggleKendaraanFields);
-
-            // For editing case: if the page loads with the category already selected
-            toggleKendaraanFields();
-        });
-    </script>
-
 @endsection
+
+<script>
+    $(document).ready(function() {
+        $('.select2').select2();
+    });
+</script>

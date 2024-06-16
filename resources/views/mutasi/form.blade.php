@@ -17,22 +17,24 @@
                 <div class="card-body">
                     <div class="form-group">
                         <label for="aset_mutasi">Aset yang dimutasi</label>
-                        <select class="form-control" id="aset_mutasi" name="aset_mutasi">
+                        <select class="form-control select2" id="aset_mutasi" name="aset_mutasi">
                             <option disabled {{ !isset($mutasi) ? 'selected' : '' }}>Pilih Aset</option>
                             @foreach($asets as $aset)
                                 <option value="{{ $aset->id }}" {{ isset($mutasi) && $mutasi->aset_mutasi == $aset->id ? 'selected' : '' }}>
-                                    {{ $aset->nama_aset }} - {{ $aset->merek }}
+                                    {{ $aset->nama_aset }} - {{ $aset->merek }} - {{ $aset->kode_aset }}
                                 </option>
                             @endforeach
                         </select>
                     </div>
                     <div class="form-group">
                         <label for="jenis_mutasi">Jenis Mutasi</label>
-                        <select class="form-control" id="jenis_mutasi" name="jenis_mutasi">
+                        <select class="form-control select2" id="jenis_mutasi" name="jenis_mutasi">
                             <option disabled {{ !isset($mutasi) ? 'selected' : '' }}>Pilih Jenis Mutasi</option>
-                            <option value="Pindah Ruangan" {{ isset($mutasi) && $mutasi->jenis_mutasi == 'Pindah Ruangan' ? 'selected' : '' }}>Pindah Ruangan</option>
-                            <option value="Hibah" {{ isset($mutasi) && $mutasi->jenis_mutasi == 'Hibah' ? 'selected' : '' }}>Hibah</option>
-                            <option value="Penjualan" {{ isset($mutasi) && $mutasi->jenis_mutasi == 'Penjualan' ? 'selected' : '' }}>Penjualan</option>
+                            @foreach($jenmutasi as $j)
+                                <option value="{{ $j->id }}" {{ isset($mutasi) && $mutasi->jenis_mutasi == $j->id ? 'selected' : '' }}>
+                                    {{ $j->kode_mutasi }} - {{ $j->jenismutasi }}
+                                </option>
+                            @endforeach
                         </select>
                     </div>
                     <div class="form-group">
@@ -45,7 +47,7 @@
                     </div>
                     <div class="form-group">
                         <label for="ruangan_asal">Ruangan Asal</label>
-                        <select class="form-control" id="ruangan_asal" name="ruangan_asal">
+                        <select class="form-control select2" id="ruangan_asal" name="ruangan_asal">
                             <option disabled {{ !isset($mutasi) ? 'selected' : '' }}>Pilih Ruangan Asal</option>
                             @foreach($ruangan as $r)
                                 <option value="{{ $r->id }}" {{ isset($mutasi) && $mutasi->ruangan_asal == $r->id ? 'selected' : '' }}>
@@ -56,7 +58,7 @@
                     </div>
                     <div class="form-group">
                         <label for="tujuan">Tujuan</label>
-                        <select class="form-control" id="tujuan" name="tujuan">
+                        <select class="form-control select2" id="tujuan" name="tujuan">
                             <option disabled {{ !isset($mutasi) ? 'selected' : '' }}>Pilih Ruangan Tujuan</option>
                             @foreach($ruangan as $r)
                                 <option value="{{ $r->id }}" {{ isset($mutasi) && $mutasi->tujuan == $r->id ? 'selected' : '' }}>
@@ -75,3 +77,10 @@
     </div>
 </form>
 @endsection
+
+<!-- Tambahkan ini di bagian bawah sebelum penutup tag </body> -->
+<script>
+    $(document).ready(function() {
+        $('.select2').select2();
+    });
+</script>

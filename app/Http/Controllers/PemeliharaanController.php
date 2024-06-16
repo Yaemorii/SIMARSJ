@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Pemeliharaan;
 use App\Models\Aset;
+use App\Models\JenisPemeliharaan;
 use App\Models\Ruangan;
 use Illuminate\Http\Request;
 
@@ -11,15 +12,16 @@ class PemeliharaanController extends Controller
 {
     public function index ()
     {
-        $pemeliharaan = Pemeliharaan::with(['asset', 'ruanganAsal'])->get();
+        $pemeliharaan = Pemeliharaan::with(['asset', 'ruanganAsal', 'asset.kategoriAset', 'asset.kondisiAset', 'asset.satuanAset', 'asset.sumberDana', 'jenisPemeliharaan'])->get();
         return view('pemeliharaan.index', ['data' => $pemeliharaan]);
     }
 
     public function tambah()
     {
         $asets = Aset::all();
+        $jenpel = JenisPemeliharaan::all();
         $ruangan = Ruangan::all();
-        return view('pemeliharaan.form', ['asets' => $asets, 'ruangan' => $ruangan]);
+        return view('pemeliharaan.form', ['asets' => $asets, 'jenpel' => $jenpel, 'ruangan' => $ruangan]);
     }
 
     public function simpan(Request $request)
@@ -41,8 +43,9 @@ class PemeliharaanController extends Controller
     {
         $pemeliharaan = Pemeliharaan::where('id', $id)->first();
         $asets = Aset::all();
+        $jenpel = JenisPemeliharaan::all();
         $ruangan = Ruangan::all();
-        return view('pemeliharaan.form', ['pemeliharaan' => $pemeliharaan, 'asets' => $asets, 'ruangan' => $ruangan]);
+        return view('pemeliharaan.form', ['pemeliharaan' => $pemeliharaan, 'asets' => $asets, 'jenpel' => $jenpel, 'ruangan' => $ruangan]);
     }
 
     public function update($id, Request $request)

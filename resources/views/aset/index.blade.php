@@ -34,8 +34,9 @@
                             <th>Nama Aset</th>
                             <th>No.Register</th>
                             <th>Merek</th>
-                            <th>Kategori Aset</th>
-                            <th>Satuan</th>
+                            <th>Kategori</th>
+                            <th>Sumber Dana</th>
+                            <th>Kondisi</th>
                             <th>Aksi</th>
                         </tr>
                     </thead>
@@ -55,8 +56,9 @@
                                 <td>{{ $row->nama_aset }}</td>
                                 <td>{{ $row->no_register }}</td>
                                 <td>{{ $row->merek }}</td>
-                                <td>{{ $row->kategori_aset }}</td>
-                                <td>{{ $row->satuan }}</td>
+                                <td>{{ $row->kategoriAset->kode_kategori ?? 'N/A' }}</td>
+                                <td>{{ $row->sumberDana->kode_sumberdana ?? 'N/A' }}</td>
+                                <td>{{ $row->kondisiAset->kode_kondisi ?? 'N/A' }}</td>
                                 <td>
                                     <a href="{{ route('aset.edit', $row->id) }}" class="btn btn-warning">Edit</a>
                                     <button class="btn btn-danger" data-toggle="modal"
@@ -92,18 +94,18 @@
                                                     <p><strong>No. Register:</strong> {{ $row->no_register }}</p>
                                                     <p><strong>Merek:</strong> {{ $row->merek }}</p>
                                                     <p><strong>Ukuran:</strong> {{ $row->ukuran }}</p>
-                                                    <p><strong>Kategori Aset:</strong> {{ $row->kategori_aset }}</p>
-                                                    <p><strong>Satuan:</strong> {{ $row->satuan }}</p>
+                                                    <p><strong>Kategori Aset:</strong> {{ $row->kategoriAset->kategori ?? 'N/A'  }}</p>
+                                                    <p><strong>Satuan:</strong> {{ $row->satuanAset->nama_satuan ?? 'N/A' }}</p>
                                                     <p><strong>Tahun Pembelian:</strong> {{ $row->tahun_pembelian }}</p>
-                                                    <p><strong>Sumber Dana:</strong> {{ $row->sumber_dana }}</p>
-                                                    @if ($row->kategori_aset == 'Kendaraan')
+                                                    <p><strong>Sumber Dana:</strong> {{ $row->sumberDana->sumberdana ?? 'N/A' }}</p>
+                                                    {{-- @if ($row->kategori_aset == 'Kendaraan')
                                                         <p><strong>Pabrik:</strong> {{ $row->pabrik }}</p>
                                                         <p><strong>No.Rangka:</strong> {{ $row->rangka }}</p>
                                                         <p><strong>No.Mesin:</strong> {{ $row->mesin }}</p>
                                                         <p><strong>No.Polisi:</strong> {{ $row->polisi }}</p>
                                                         <p><strong>No.BPKB:</strong> {{ $row->bpkb }}</p>
-                                                    @endif
-                                                    <p><strong>Kondisi:</strong> {{ $row->kondisi }}</p>
+                                                    @endif --}}
+                                                    <p><strong>Kondisi:</strong> {{ $row->kondisiAset->nama_kondisi ?? 'N/A' }}</p>
                                                     <p><strong>Harga Satuan:</strong> Rp.{{ $row->harga }}</p>
                                                     <p><strong>Keterangan:</strong> {{ $row->keterangan }}</p>
                                                 </div>

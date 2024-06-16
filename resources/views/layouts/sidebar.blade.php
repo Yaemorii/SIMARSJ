@@ -33,11 +33,12 @@
         <div id="collapseMaster" class="collapse" aria-labelledby="headingMaster" data-parent="#accordionSidebar">
             <div class="bg-white py-2 collapse-inner rounded">
                 <h6 class="collapse-header">Master Data:</h6>
-                <a class="collapse-item" href="#">Kategori Aset</a>
-                <a class="collapse-item" href="#">Sumber Dana</a>
-                <a class="collapse-item" href="#">Satuan</a>
-                <a class="collapse-item" href="#">Kondisi</a>
-                <a class="collapse-item" href="#">Jenis Pemeliharaan</a>
+                <a class="collapse-item" href="{{ route('kategori') }}">Kategori Aset</a>
+                <a class="collapse-item" href="{{ route('sumberdana') }}">Sumber Dana</a>
+                <a class="collapse-item" href="{{ route('satuan') }}">Satuan</a>
+                <a class="collapse-item" href="{{ route('kondisi') }}">Kondisi</a>
+                <a class="collapse-item" href="{{ route('jenmut') }}">Jenis Mutasi</a>
+                <a class="collapse-item" href="{{ route('jenpel') }}">Jenis Pemeliharaan</a>
             </div>
         </div>
     </li>
@@ -70,12 +71,6 @@
         <a class="nav-link" href="{{ route('ruangan') }}">
             <i class="fa-solid fa-building"></i>
             <span>Ruangan</span></a>
-    </li>
-
-    <li class="nav-item">
-        <a class="nav-link" href="#">
-            <i class="fa-solid fa-users"></i>
-            <span>Kepemilikan Aset</span></a>
     </li>
 
     <li class="nav-item active">
