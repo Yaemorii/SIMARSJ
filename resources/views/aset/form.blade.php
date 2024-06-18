@@ -72,45 +72,42 @@
                             <input type="date" class="form-control" id="tahun_pembelian" name="tahun_pembelian"
                                 value="{{ isset($aset) ? $aset->tahun_pembelian : '' }}">
                         </div>
+
                         <div class="form-group">
                             <label for="kategori_aset">Kategori Aset</label>
-                            <select class="form-control select2" id="kategori_aset" name="kategori_aset">
-                                <option disabled {{ !isset($aset) ? 'selected' : '' }}>Pilih Kategori</option>
-                                @foreach($kategoris as $kategori)
+                            <select class="form-control select2" id="kategori_aset" name="kategori_aset" required>
+                                <option value="">Pilih Kategori</option>
+                                @foreach ($kategoris as $kategori)
                                     <option value="{{ $kategori->id }}" {{ isset($aset) && $aset->kategori_aset == $kategori->id ? 'selected' : '' }}>
-                                        {{ $kategori->kode_kategori }} - {{ $kategori->kategori }}
+                                        {{ $kategori->kategori }}
                                     </option>
                                 @endforeach
                             </select>
                         </div>
-                        
-                        {{-- <div id="form-kendaraan" style="display: none;">
-                            <div class="form-group">
-                                <label for="pabrik">Pabrik</label>
-                                <input type="text" class="form-control" id="pabrik" name="pabrik"
-                                    data-value="{{ isset($aset) ? $aset->pabrik : '' }}">
-                            </div>
-                            <div class="form-group">
-                                <label for="rangka">Rangka</label>
-                                <input type="text" class="form-control" id="rangka" name="rangka"
-                                    data-value="{{ isset($aset) ? $aset->rangka : '' }}">
-                            </div>
-                            <div class="form-group">
-                                <label for="mesin">Mesin</label>
-                                <input type="text" class="form-control" id="mesin" name="mesin"
-                                    data-value="{{ isset($aset) ? $aset->mesin : '' }}">
-                            </div>
-                            <div class="form-group">
-                                <label for="polisi">Polisi</label>
-                                <input type="text" class="form-control" id="polisi" name="polisi"
-                                    data-value="{{ isset($aset) ? $aset->polisi : '' }}">
-                            </div>
-                            <div class="form-group">
-                                <label for="bpkb">BPKB</label>
-                                <input type="text" class="form-control" id="bpkb" name="bpkb"
-                                    data-value="{{ isset($aset) ? $aset->bpkb : '' }}">
-                            </div>
-                        </div> --}}
+                    
+                           <div id="form-kendaraan" style="display: none;">
+        <div class="form-group">
+            <label for="pabrik">Pabrik</label>
+            <input type="text" class="form-control" id="pabrik" name="pabrik" value="{{ isset($aset) ? $aset->pabrik : old('pabrik') }}">
+        </div>
+        <div class="form-group">
+            <label for="rangka">Nomor Rangka</label>
+            <input type="text" class="form-control" id="rangka" name="rangka" value="{{ isset($aset) ? $aset->rangka : old('rangka') }}">
+        </div>
+        <div class="form-group">
+            <label for="mesin">Nomor Mesin</label>
+            <input type="text" class="form-control" id="mesin" name="mesin" value="{{ isset($aset) ? $aset->mesin : old('mesin') }}">
+        </div>
+        <div class="form-group">
+            <label for="polisi">Nomor Polisi</label>
+            <input type="text" class="form-control" id="polisi" name="polisi" value="{{ isset($aset) ? $aset->polisi : old('polisi') }}">
+        </div>
+        <div class="form-group">
+            <label for="bpkb">Nomor BPKB</label>
+            <input type="text" class="form-control" id="bpkb" name="bpkb" value="{{ isset($aset) ? $aset->bpkb : old('bpkb') }}">
+        </div>
+    </div>
+                
                         <div class="form-group">
                             <label for="harga">Harga Satuan</label>
                             <div class="input-group">
@@ -124,7 +121,7 @@
                         <div class="form-group">
                             <label for="sumber_dana">Sumber Dana</label>
                             <select class="form-control select2" id="sumber_dana" name="sumber_dana">
-                                <option disabled {{ !isset($aset) ? 'selected' : '' }}>Pilih Kondisi</option>
+                                <option disabled {{ !isset($aset) ? 'selected' : '' }}>Pilih Sumber Dana</option>
                                 @foreach($sumbers as $sumber)
                                     <option value="{{ $sumber->id }}" {{ isset($aset) && $aset->sumber_dana == $sumber->id ? 'selected' : '' }}>
                                         {{ $sumber->kode_sumberdana }} - {{ $sumber->sumberdana }}
@@ -139,6 +136,17 @@
                                 @foreach($kondisis as $kondisi)
                                     <option value="{{ $kondisi->id }}" {{ isset($aset) && $aset->kondisi == $kondisi->id ? 'selected' : '' }}>
                                         {{ $kondisi->kode_kondisi }} - {{ $kondisi->nama_kondisi }}
+                                    </option>
+                                @endforeach
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label for="ruangan_asal">Ruangan Asal</label>
+                            <select class="form-control select2" id="ruangan_asal" name="ruangan_asal">
+                                <option disabled {{ !isset($aset) ? 'selected' : '' }}>Pilih Ruangan Asal</option>
+                                @foreach($ruangan as $r)
+                                    <option value="{{ $r->id }}" {{ isset($aset) && $aset->ruangan_asal == $r->id ? 'selected' : '' }}>
+                                        {{ $r->nama_ruangan }} - {{ $r->penanggung_jawab }}
                                     </option>
                                 @endforeach
                             </select>
@@ -165,6 +173,28 @@
         </div>
     </form>
 @endsection
+
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        const kategoriAsetSelect = $('#kategori_aset');
+        const formKendaraan = document.getElementById('form-kendaraan');
+        
+        // Inisialisasi Select2 pada kategori_aset
+        kategoriAsetSelect.select2();
+
+        const toggleKendaraanForm = () => {
+            if (kategoriAsetSelect.val() == '{{ $kategoriKendaraanId }}') {
+                formKendaraan.style.display = 'block';
+            } else {
+                formKendaraan.style.display = 'none';
+            }
+        };
+
+        kategoriAsetSelect.on('change', toggleKendaraanForm);
+
+        toggleKendaraanForm(); // Initialize form display on page load
+    });
+</script>
 
 <script>
     $(document).ready(function() {

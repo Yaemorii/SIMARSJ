@@ -37,6 +37,7 @@
                             <th>Kategori</th>
                             <th>Sumber Dana</th>
                             <th>Kondisi</th>
+                            <th>Ruangan</th>
                             <th>Aksi</th>
                         </tr>
                     </thead>
@@ -59,12 +60,13 @@
                                 <td>{{ $row->kategoriAset->kode_kategori ?? 'N/A' }}</td>
                                 <td>{{ $row->sumberDana->kode_sumberdana ?? 'N/A' }}</td>
                                 <td>{{ $row->kondisiAset->kode_kondisi ?? 'N/A' }}</td>
+                                <td>{{ $row->ruanganAsal->nama_ruangan ?? 'N/A' }}</td>
                                 <td>
-                                    <a href="{{ route('aset.edit', $row->id) }}" class="btn btn-warning">Edit</a>
+                                    <a href="{{ route('aset.edit', $row->id) }}" class="btn btn-warning"><i class="fa-solid fa-pen-to-square"></i></a>
                                     <button class="btn btn-danger" data-toggle="modal"
-                                        data-target="#hapusModal{{ $row->id }}">Hapus</button>
+                                        data-target="#hapusModal{{ $row->id }}"><i class="fa-solid fa-trash-can"></i></button>
                                     <button type="button" class="btn btn-info" data-toggle="modal"
-                                        data-target="#detailModal{{ $row->id }}">Detail</button>
+                                        data-target="#detailModal{{ $row->id }}"><i class="fa-solid fa-circle-info"></i></button>
                                 </td>
                             </tr>
 
@@ -98,13 +100,13 @@
                                                     <p><strong>Satuan:</strong> {{ $row->satuanAset->nama_satuan ?? 'N/A' }}</p>
                                                     <p><strong>Tahun Pembelian:</strong> {{ $row->tahun_pembelian }}</p>
                                                     <p><strong>Sumber Dana:</strong> {{ $row->sumberDana->sumberdana ?? 'N/A' }}</p>
-                                                    {{-- @if ($row->kategori_aset == 'Kendaraan')
+                                                    @if ($row->kategoriAset->kategori === 'Kendaraan Bermotor')
                                                         <p><strong>Pabrik:</strong> {{ $row->pabrik }}</p>
-                                                        <p><strong>No.Rangka:</strong> {{ $row->rangka }}</p>
-                                                        <p><strong>No.Mesin:</strong> {{ $row->mesin }}</p>
-                                                        <p><strong>No.Polisi:</strong> {{ $row->polisi }}</p>
-                                                        <p><strong>No.BPKB:</strong> {{ $row->bpkb }}</p>
-                                                    @endif --}}
+                                                        <p><strong>No. Rangka:</strong> {{ $row->rangka }}</p>
+                                                        <p><strong>No. Mesin:</strong> {{ $row->mesin }}</p>
+                                                        <p><strong>No. Polisi:</strong> {{ $row->polisi }}</p>
+                                                        <p><strong>No. BPKB:</strong> {{ $row->bpkb }}</p>
+                                                    @endif
                                                     <p><strong>Kondisi:</strong> {{ $row->kondisiAset->nama_kondisi ?? 'N/A' }}</p>
                                                     <p><strong>Harga Satuan:</strong> Rp.{{ $row->harga }}</p>
                                                     <p><strong>Keterangan:</strong> {{ $row->keterangan }}</p>

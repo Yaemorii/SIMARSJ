@@ -46,18 +46,7 @@
                         <input type="date" class="form-control" id="tgl_mutasi" name="tgl_mutasi" value="{{ isset($mutasi) ? $mutasi->tgl_mutasi : '' }}">
                     </div>
                     <div class="form-group">
-                        <label for="ruangan_asal">Ruangan Asal</label>
-                        <select class="form-control select2" id="ruangan_asal" name="ruangan_asal">
-                            <option disabled {{ !isset($mutasi) ? 'selected' : '' }}>Pilih Ruangan Asal</option>
-                            @foreach($ruangan as $r)
-                                <option value="{{ $r->id }}" {{ isset($mutasi) && $mutasi->ruangan_asal == $r->id ? 'selected' : '' }}>
-                                    {{ $r->nama_ruangan }} - {{ $r->penanggung_jawab }}
-                                </option>
-                            @endforeach
-                        </select>
-                    </div>
-                    <div class="form-group">
-                        <label for="tujuan">Tujuan</label>
+                        <label for="tujuan">Ruangan Tujuan</label>
                         <select class="form-control select2" id="tujuan" name="tujuan">
                             <option disabled {{ !isset($mutasi) ? 'selected' : '' }}>Pilih Ruangan Tujuan</option>
                             @foreach($ruangan as $r)

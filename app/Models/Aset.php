@@ -11,7 +11,7 @@ class Aset extends Model
 
     protected $fillable = [
         'kode_aset', 'nama_aset', 'no_register', 'merek', 'ukuran', 'satuan', 'kategori_aset', 'tahun_pembelian', 
-        'gambar_aset', 'kondisi', 'sumber_dana', 'harga', 'keterangan'
+        'gambar_aset', 'kondisi', 'sumber_dana','pabrik', 'rangka', 'mesin', 'polisi', 'bpkb', 'harga', 'keterangan', 'ruangan_asal'
     ];
 
     protected static function boot()
@@ -24,6 +24,11 @@ class Aset extends Model
             Pemeliharaan::where('aset_pelihara', $aset->id)->delete();
             Pinjam::where('aset_dipinjam', $aset->id)->delete();
         });
+    }
+
+    public function ruanganAsal()
+    {
+        return $this->belongsTo(Ruangan::class, 'ruangan_asal');
     }
 
     public function kategoriAset()

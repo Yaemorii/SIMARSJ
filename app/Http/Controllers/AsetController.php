@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Aset;
+use App\Models\Ruangan;
 use App\Models\Kategori;
 use App\Models\Kondisi;
 use App\Models\Satuan;
@@ -14,7 +15,7 @@ class AsetController extends Controller
 {
     public function index()
     {
-        $aset = Aset::with(['kategoriAset', 'kondisiAset', 'satuanAset', 'sumberDana'])->get();
+        $aset = Aset::with(['ruanganAsal','kategoriAset', 'kondisiAset', 'satuanAset', 'sumberDana'])->get();
         return view('aset.index', ['data' => $aset]);
     }
 
@@ -24,11 +25,24 @@ class AsetController extends Controller
         $kondisis = Kondisi::all();
         $satuans = Satuan::all();
         $sumbers = SumberDana::all();
-        return view('aset.form', ['kategoris' => $kategoris, 'kondisis' => $kondisis, 'satuans' => $satuans, 'sumbers' => $sumbers]);
+        $ruangan = Ruangan::all();
+        // Mendapatkan ID kategori Kendaraan Bermotor
+        $kategoriKendaraan = Kategori::where('kategori', 'Kendaraan Bermotor')->first();
+
+        return view('aset.form', [
+            'kategoris' => $kategoris,
+            'kondisis' => $kondisis,
+            'satuans' => $satuans,
+            'sumbers' => $sumbers,
+            'ruangan' => $ruangan,
+            'kategoriKendaraanId' => $kategoriKendaraan->id
+        ]);
     }
 
     public function simpan(Request $request)
     {
+        $kategoriKendaraanId = Kategori::where('kategori', 'Kendaraan Bermotor')->first()->id;
+    
         $request->validate([
             'kode_aset' => 'required|string|max:255',
             'nama_aset' => 'required|string|max:255',
@@ -41,39 +55,54 @@ class AsetController extends Controller
             'kondisi' => 'required|string|max:255',
             'sumber_dana' => 'required|string|max:255',
             'harga' => 'required|string|max:255',
+            'ruangan_asal' => 'required|string|max:255',
             'keterangan' => 'required|string|max:255',
         ], [
             'gambar_aset.max' => 'Gambar yang diinput tidak boleh melebihi 2MB',
         ]);
-
+    
+        if ($request->kategori_aset == $kategoriKendaraanId) {
+            $request->validate([
+                'pabrik' => 'required|string|max:255',
+                'rangka' => 'required|string|max:255',
+                'mesin' => 'required|string|max:255',
+                'polisi' => 'required|string|max:255',
+                'bpkb' => 'required|string|max:255',
+            ]);
+        }
+    
         $path = null;
         if ($request->hasFile('gambar_aset')) {
             $path = $request->file('gambar_aset')->store('public/aset_images');
         }
-
+    
         $aset = [
             'kode_aset' => $request->kode_aset,
             'gambar_aset' => $path,
             'nama_aset' => $request->nama_aset,
             'no_register' => $request->no_register,
-            'merek' => $request->merek, 
+            'merek' => $request->merek,
             'ukuran' => $request->ukuran,
             'kategori_aset' => $request->kategori_aset,
             'satuan' => $request->satuan,
             'tahun_pembelian' => $request->tahun_pembelian,
             'sumber_dana' => $request->sumber_dana,
-            // 'pabrik' => $request->pabrik,
-            // 'rangka' => $request->rangka,
-            // 'mesin' => $request->mesin,
-            // 'polisi' => $request->polisi,
-            // 'bpkb' => $request->bpkb,
             'kondisi' => $request->kondisi,
             'harga' => $request->harga,
+            'ruangan_asal' => $request->ruangan_asal,
             'keterangan' => $request->keterangan,
         ];
-
+    
+        if ($request->kategori_aset == $kategoriKendaraanId) {
+            $aset['pabrik'] = $request->pabrik;
+            $aset['rangka'] = $request->rangka;
+            $aset['mesin'] = $request->mesin;
+            $aset['polisi'] = $request->polisi;
+            $aset['bpkb'] = $request->bpkb;
+        }
+    
         Aset::create($aset);
-
+    
         return redirect()->route('aset')->with('success', 'Data berhasil ditambahkan');
     }
 
@@ -84,11 +113,25 @@ class AsetController extends Controller
         $kondisis = Kondisi::all();
         $satuans = Satuan::all();
         $sumbers = SumberDana::all();
-        return view('aset.form', ['aset' => $aset, 'kategoris' => $kategoris, 'kondisis' => $kondisis, 'satuans' => $satuans, 'sumbers' => $sumbers]);
-    }
+        $ruangan = Ruangan::all();
+        // Mendapatkan ID kategori Kendaraan Bermotor
+        $kategoriKendaraan = Kategori::where('kategori', 'Kendaraan Bermotor')->first();
 
+        return view('aset.form', [
+            'aset' => $aset,
+            'kategoris' => $kategoris,
+            'kondisis' => $kondisis,
+            'satuans' => $satuans,
+            'sumbers' => $sumbers,
+            'ruangan' => $ruangan,
+            'kategoriKendaraanId' => $kategoriKendaraan->id
+        ]);
+    }
+    
     public function update($id, Request $request)
     {
+        $kategoriKendaraanId = Kategori::where('kategori', 'Kendaraan Bermotor')->first()->id;
+    
         $request->validate([
             'kode_aset' => 'required|string|max:255',
             'nama_aset' => 'required|string|max:255',
@@ -99,22 +142,27 @@ class AsetController extends Controller
             'satuan' => 'required|string|max:255',
             'tahun_pembelian' => 'required|date',
             'sumber_dana' => 'required|string|max:255',
-            // 'pabrik' => 'required|string|max:255',
-            // 'rangka' => 'required|string|max:255',
-            // 'mesin' => 'required|string|max:255',
-            // 'polisi' => 'required|string|max:255',
-            // 'bpkb' => 'required|string|max:255',
-            'gambar_aset' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048',
             'kondisi' => 'required|string|max:255',
             'harga' => 'required|string|max:255',
+            'ruangan_asal' => 'required|string|max:255',
             'keterangan' => 'required|string|max:255',
         ], [
             'gambar_aset.max' => 'Gambar yang diinput tidak boleh melebihi 2MB',
         ]);
-
+    
+        if ($request->kategori_aset == $kategoriKendaraanId) {
+            $request->validate([
+                'pabrik' => 'required|string|max:255',
+                'rangka' => 'required|string|max:255',
+                'mesin' => 'required|string|max:255',
+                'polisi' => 'required|string|max:255',
+                'bpkb' => 'required|string|max:255',
+            ]);
+        }
+    
         $aset = Aset::findOrFail($id);
-
-        $aset = [
+    
+        $data = [
             'kode_aset' => $request->kode_aset,
             'nama_aset' => $request->nama_aset,
             'no_register' => $request->no_register,
@@ -124,26 +172,32 @@ class AsetController extends Controller
             'satuan' => $request->satuan,
             'tahun_pembelian' => $request->tahun_pembelian,
             'sumber_dana' => $request->sumber_dana,
-            // 'pabrik' => $request->pabrik,
-            // 'rangka' => $request->rangka,
-            // 'mesin' => $request->mesin,
-            // 'polisi' => $request->polisi,
-            // 'bpkb' => $request->bpkb,
             'kondisi' => $request->kondisi,
             'harga' => $request->harga,
+            'ruangan_asal' => $request->ruangan_asal,
             'keterangan' => $request->keterangan,
         ];
-
+    
+        if ($request->kategori_aset == $kategoriKendaraanId) {
+            $data['pabrik'] = $request->pabrik;
+            $data['rangka'] = $request->rangka;
+            $data['mesin'] = $request->mesin;
+            $data['polisi'] = $request->polisi;
+            $data['bpkb'] = $request->bpkb;
+        }
+    
         if ($request->hasFile('gambar_aset')) {
             if ($aset->gambar_aset) {
                 Storage::delete($aset->gambar_aset);
             }
             $data['gambar_aset'] = $request->file('gambar_aset')->store('public/aset_images');
         }
-
-        Aset::find($id)->update($aset);
-        return redirect()->route('aset');
+    
+        $aset->update($data);
+    
+        return redirect()->route('aset')->with('success', 'Data berhasil diperbarui');
     }
+    
 
     public function hapus($id)
     {

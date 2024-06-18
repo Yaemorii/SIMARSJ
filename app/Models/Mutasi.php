@@ -9,7 +9,7 @@ class Mutasi extends Model
 {
     use HasFactory;
 
-    protected $fillable = ['tgl_mutasi', 'jenis_mutasi', 'aset_mutasi', 'ruangan_asal', 'tujuan', 'alasan_mutasi'];
+    protected $fillable = ['tgl_mutasi', 'jenis_mutasi', 'aset_mutasi', 'tujuan', 'alasan_mutasi'];
 
     public function asset()
     {
@@ -19,11 +19,6 @@ class Mutasi extends Model
     public function jenisMutasi()
     {
         return $this->belongsTo(JenisMutasi::class, 'jenis_mutasi');
-    }
-
-    public function ruanganAsal()
-    {
-        return $this->belongsTo(Ruangan::class, 'ruangan_asal');
     }
 
     public function ruanganTujuan()

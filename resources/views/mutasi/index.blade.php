@@ -20,8 +20,7 @@
                             <th>Jenis Mutasi</th>
                             <th>Aset yang dimutasi</th>
                             <th>Merek</th>
-                            <th>Ruangan Asal</th>
-                            <th>Tujuan</th>
+                            <th>Ruangan Tujuan</th>
                             <th>Alasan Mutasi</th>
                             <th>Aksi</th>
                         </tr>
@@ -35,15 +34,14 @@
                                 <td>{{ $row->jenisMutasi->kode_mutasi ?? 'N/A' }}</td>
                                 <td>{{ $row->asset->nama_aset ?? 'N/A' }}</td>
                                 <td>{{ $row->asset->merek ?? 'N/A' }}</td>
-                                <td>{{ $row->ruanganAsal->nama_ruangan ?? 'N/A' }}</td>
                                 <td>{{ $row->ruanganTujuan->nama_ruangan ?? 'N/A' }}</td>
                                 <td>{{ $row->alasan_mutasi }}</td>
                                 <td>
-                                    <a href="{{ route('mutasi.edit', $row->id) }}" class="btn btn-warning">Edit</a>
+                                    <a href="{{ route('mutasi.edit', $row->id) }}" class="btn btn-warning"><i class="fa-solid fa-pen-to-square"></i></a>
                                     <button class="btn btn-danger" data-toggle="modal"
-                                        data-target="#hapusModal{{ $row->id }}">Hapus</button>
+                                        data-target="#hapusModal{{ $row->id }}"><i class="fa-solid fa-trash-can"></i></button>
                                     <button type="button" class="btn btn-info" data-toggle="modal"
-                                        data-target="#detailModal{{ $row->id }}">Detail</button>
+                                        data-target="#detailModal{{ $row->id }}"><i class="fa-solid fa-circle-info"></i></button>
                                 </td>
                             </tr>
 
@@ -87,8 +85,6 @@
                                                     @endif --}}
                                                     <p><strong>Kondisi:</strong> {{ $row->asset->kondisiAset->nama_kondisi ?? 'N/A'}}</p>
                                                     <p><strong>Jenis Mutasi:</strong> {{ $row->jenisMutasi->jenismutasi }}</p>
-                                                    <p><strong>Ruangan Asal:</strong>
-                                                        {{ $row->ruanganAsal->nama_ruangan ?? 'N/A' }}</p>
                                                     <p><strong>Ruangan Tujuan:</strong>
                                                         {{ $row->ruanganTujuan->nama_ruangan ?? 'N/A' }}</p>
                                                 </div>

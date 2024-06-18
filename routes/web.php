@@ -1,6 +1,7 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\KategoriController;
 use App\Http\Controllers\JenisPemeliharaanController;
 use App\Http\Controllers\JenisMutasiController;
@@ -31,9 +32,7 @@ Route::get('/', function () {
     return view('welcome');
 });
 
-Route::get('dashboard', function (){
-    return view('dashboard');
-})->name('dashboard');
+Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard');
 
 Route::controller(KategoriController::class)->prefix('kategori')->group(function () {
     Route::get('','index')->name('kategori');

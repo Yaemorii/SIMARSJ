@@ -12,7 +12,7 @@ class MutasiController extends Controller
 {
     public function index()
     {
-        $mutasi = Mutasi::with(['asset', 'jenisMutasi', 'ruanganAsal', 'ruanganTujuan', 'asset.kategoriAset', 'asset.kondisiAset', 'asset.satuanAset', 'asset.sumberDana', 'jenisMutasi', 'ruanganAsal', 'ruanganTujuan'])->get();
+        $mutasi = Mutasi::with(['asset', 'jenisMutasi', 'ruanganTujuan', 'asset.kategoriAset', 'asset.kondisiAset', 'asset.satuanAset', 'asset.sumberDana', 'jenisMutasi'])->get();
         return view('mutasi.index', ['data' => $mutasi]);
     }
 
@@ -30,7 +30,6 @@ class MutasiController extends Controller
             'tgl_mutasi' => $request->tgl_mutasi,
             'jenis_mutasi' => $request->jenis_mutasi,
             'aset_mutasi' => $request->aset_mutasi,
-            'ruangan_asal' => $request->ruangan_asal,
             'tujuan' => $request->tujuan,
             'alasan_mutasi' => $request->alasan_mutasi,
         ];
@@ -54,7 +53,6 @@ class MutasiController extends Controller
             'tgl_mutasi' => $request->tgl_mutasi,
             'jenis_mutasi' => $request->jenis_mutasi,
             'aset_mutasi' => $request->aset_mutasi,
-            'ruangan_asal' => $request->ruangan_asal,
             'tujuan' => $request->tujuan,
             'alasan_mutasi' => $request->alasan_mutasi,
         ];
