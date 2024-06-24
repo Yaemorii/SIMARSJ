@@ -21,7 +21,9 @@ class User extends Authenticatable
         'name',
         'email',
         'password',
+        'role'
     ];
+    
 
     /**
      * The attributes that should be hidden for serialization.
@@ -32,6 +34,11 @@ class User extends Authenticatable
         'password',
         'remember_token',
     ];
+
+    public function aset()
+    {
+        return $this->hasMany(Aset::class);
+    }
 
     /**
      * The attributes that should be cast.

@@ -19,6 +19,7 @@
                             <th>Kode Ruangan</th>
                             <th>Nama Ruangan</th>
                             <th>Penanggung Jawab</th>
+                            <th>Jabatan</th>
                             <th>NIP</th>
                             <th>Aksi</th>
                         </tr>
@@ -31,6 +32,7 @@
                                 <td>{{ $row->no_gedung }}.{{ $row->no_lantai }}.{{ $row->no_ruangan }}</td>
                                 <td>{{ $row->nama_ruangan }}</td>
                                 <td>{{ $row->penanggung_jawab }}</td>
+                                <td>{{ $row->jabatan }}</td>
                                 <td>{{ $row->nip }}</td>
                                 <td>
                                     <a href="{{ route('ruangan.edit', $row->id) }}" class="btn btn-warning">Edit</a>
@@ -54,6 +56,7 @@
                                             <p><strong>Nomor Lantai:</strong> {{ $row->no_lantai }}</p>
                                             <p><strong>Nomor Ruangan:</strong> {{ $row->no_ruangan }}</p>
                                             <p><strong>Penanggung Jawab:</strong> {{ $row->penanggung_jawab }}</p>
+                                            <p><strong>Jabatan:</strong> {{ $row->jabatan }}</p>
                                             <p><strong>NIP:</strong> {{ $row->nip }}</p>
                                         </div>
                                         <div class="modal-footer">

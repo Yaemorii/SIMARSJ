@@ -3,9 +3,7 @@
 @section('title', 'Form Pemeliharaan')
 
 @section('content')
-    <form
-        action="{{ isset($pemeliharaan) ? route('pemeliharaan.tambah.update', $pemeliharaan->id) : route('pemeliharaan.tambah.simpan') }}"
-        method="post">
+    <form action="{{ isset($pemeliharaan) ? route('pemeliharaan.tambah.update', $pemeliharaan->id) : route('pemeliharaan.tambah.simpan') }}" method="post">
         @csrf
         @if (isset($pemeliharaan))
             @method('PUT')
@@ -14,10 +12,25 @@
             <div class="col-12">
                 <div class="card shadow mb-4">
                     <div class="card-header py-3">
-                        <h6 class="m-0 font-weight-bold text-primary">
-                            {{ isset($pemeliharaan) ? 'Form Edit Pemeliharaan' : 'Form Tambah Pemeliharaan' }}</h6>
+                        <h6 class="m-0 font-weight-bold text-primary"> {{ isset($pemeliharaan) ? 'Form Edit Pemeliharaan' : 'Form Tambah Pemeliharaan' }}</h6>
                     </div>
                     <div class="card-body">
+                        <div class="form-group">
+                            <label for="aset_pelihara">Aset yang dipelihara</label>
+                            @if(isset($selectedAset) || isset($pemeliharaan))
+                                <input type="text" class="form-control" value="{{ isset($selectedAset) ? $selectedAset->nama_aset . ' - ' . $selectedAset->merek . ' - ' . $selectedAset->kode_aset : (isset($pemeliharaan) ? $pemeliharaan->asset->nama_aset . ' - ' . $pemeliharaan->asset->merek . ' - ' . $pemeliharaan->asset->kode_aset : '') }}" disabled>
+                                <input type="hidden" name="aset_pelihara" value="{{ isset($selectedAset) ? $selectedAset->id : (isset($pemeliharaan) ? $pemeliharaan->asset->id : '') }}">
+                            @else
+                                <select class="form-control select2" id="aset_pelihara" name="aset_pelihara">
+                                    <option disabled {{ !isset($pemeliharaan) ? 'selected' : '' }}>Pilih Aset</option>
+                                    @foreach($asets as $aset)
+                                        <option value="{{ $aset->id }}" {{ (isset($selectedAset) && $selectedAset->id == $aset->id) || (isset($pemeliharaan) && $pemeliharaan->aset_pelihara == $aset->id) ? 'selected' : '' }}>
+                                            {{ $aset->nama_aset }} - {{ $aset->merek }} - {{ $aset->kode_aset }}
+                                        </option>
+                                    @endforeach
+                                </select>
+                            @endif
+                        </div>
                         <div class="form-group">
                             <label for="tgl_pemeliharaan">Tanggal Pemeliharaan</label>
                             <input type="date" class="form-control" id="tgl_pemeliharaan" name="tgl_pemeliharaan"
@@ -34,28 +47,6 @@
                                 @endforeach
                             </select>
                         </div>
-                            <div class="form-group">
-                                <label for="aset_pelihara">Aset yang dipelihara</label>
-                                <select class="form-control select2" id="aset_pelihara" name="aset_pelihara">
-                                    <option disabled {{ !isset($pemeliharaan) ? 'selected' : '' }}>Pilih Aset</option>
-                                    @foreach($asets as $aset)
-                                        <option value="{{ $aset->id }}" {{ isset($pemeliharaan) && $pemeliharaan->aset_pelihara == $aset->id ? 'selected' : '' }}>
-                                            {{ $aset->nama_aset }} - {{ $aset->merek }} - {{ $aset->kode_aset }}
-                                        </option>
-                                    @endforeach
-                                </select>
-                            </div>
-                            <div class="form-group">
-                                <label for="ruangan">Ruangan</label>
-                                <select class="form-control select2" id="ruangan" name="ruangan">
-                                    <option disabled {{ !isset($pemeliharaan) ? 'selected' : '' }}>Pilih Ruangan</option>
-                                    @foreach($ruangan as $r)
-                                        <option value="{{ $r->id }}" {{ isset($pemeliharaan) && $pemeliharaan->ruangan == $r->id ? 'selected' : '' }}>
-                                            {{ $r->nama_ruangan }} - {{ $r->penanggung_jawab }}
-                                        </option>
-                                    @endforeach
-                                </select>
-                            </div>
                         <div class="form-group">
                             <label for="biaya_pemeliharaan">Biaya Pemeliharaan</label>
                             <div class="input-group">
@@ -76,3 +67,9 @@
         </div>
     </form>
 @endsection
+
+<script>
+    $(document).ready(function() {
+        $('.select2').select2();
+    });
+</script>

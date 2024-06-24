@@ -57,6 +57,11 @@
                                 value="{{ isset($ruangan) ? $ruangan->penanggung_jawab : '' }}">
                         </div>
                         <div class="form-group">
+                            <label for="jabatan">Jabatan</label>
+                            <input type="text" class="form-control" id="jabatan" name="jabatan"
+                                value="{{ isset($ruangan) ? $ruangan->jabatan : '' }}">
+                        </div>
+                        <div class="form-group">
                             <label for="nip">NIP</label>
                             <input type="text" class="form-control" id="nip" name="nip"
                                 value="{{ isset($ruangan) ? $ruangan->nip : '' }}">

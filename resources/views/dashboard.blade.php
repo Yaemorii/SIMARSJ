@@ -10,8 +10,14 @@
             <div class="card-body">
                 <div class="row no-gutters align-items-center">
                     <div class="col mr-2">
+                        @if(auth()->user()->role == 'Admin')
                         <a href="{{ route('aset') }}" class="text-s font-weight-bold text-danger text-uppercase mb-1">
-                            Jumlah Aset</a>
+                            Jumlah Aset</a> 
+                        @endif
+                        @if(auth()->user()->role != 'Admin')
+                        <p class="text-s font-weight-bold text-danger text-uppercase mb-1">
+                            Jumlah Aset</p>
+                        @endif
                         <div class="h5 mb-0 font-weight-bold text-gray-800">{{ $totalAset }}</div>
                     </div>
                     <div class="col-auto">
@@ -28,8 +34,14 @@
         <div class="card-body">
             <div class="row no-gutters align-items-center">
                 <div class="col mr-2">
+                    @if(auth()->user()->role == 'Admin')
                     <a href="{{ route('mutasi') }}" class="text-s font-weight-bold text-warning text-uppercase mb-1">
                         Jumlah Mutasi</a>
+                    @endif
+                    @if(auth()->user()->role != 'Admin')
+                    <p class="text-s font-weight-bold text-warning text-uppercase mb-1">
+                        Jumlah Mutasi</p>
+                    @endif
                     <div class="h5 mb-0 font-weight-bold text-gray-800">{{ $totalMutasi }}</div>
                 </div>
                 <div class="col-auto">
@@ -46,8 +58,14 @@
                 <div class="card-body">
                     <div class="row no-gutters align-items-center">
                         <div class="col mr-2">
+                            @if(auth()->user()->role == 'Admin')
                             <a href="{{ route('pemeliharaan') }}" class="text-s font-weight-bold text-success text-uppercase mb-1">
                                 Pemeliharaan Aset</a>
+                            @endif
+                            @if(auth()->user()->role != 'Admin')
+                            <p class="text-s font-weight-bold text-success text-uppercase mb-1">
+                                Pemeliharaan Aset</p>
+                            @endif
                             <div class="h5 mb-0 font-weight-bold text-gray-800">{{ $totalPemeliharaan }}</div>
                         </div>
                         <div class="col-auto">
@@ -64,8 +82,14 @@
                 <div class="card-body">
                     <div class="row no-gutters align-items-center">
                         <div class="col mr-2">
+                            @if(auth()->user()->role == 'Admin')
                             <a href="{{ route('ruangan') }}" class="text-s font-weight-bold text-primary text-uppercase mb-1">
-                                Pemeliharaan Aset</a>
+                                Ruangan</a>
+                            @endif
+                            @if(auth()->user()->role != 'Admin')
+                            <p class="text-s font-weight-bold text-primary text-uppercase mb-1">
+                                Ruangan</p>
+                            @endif
                             <div class="h5 mb-0 font-weight-bold text-gray-800">{{ $totalRuangan }}</div>
                         </div>
                         <div class="col-auto">

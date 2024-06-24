@@ -1,6 +1,7 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\AuthController;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\KategoriController;
 use App\Http\Controllers\JenisPemeliharaanController;
@@ -30,6 +31,30 @@ use App\Http\Controllers\MilikController;
 
 Route::get('/', function () {
     return view('welcome');
+});
+
+Route::get('/login', [AuthController::class, 'showLoginForm'])->name('login');
+Route::post('/login', [AuthController::class, 'login']);
+Route::post('/logout', [AuthController::class, 'logout'])->name('logout');
+
+Route::middleware(['auth', 'role:Admin'])->group(function () {
+    Route::get('/aset', [AsetController::class, 'index'])->name('aset');
+    // Route lainnya untuk Admin...
+});
+
+Route::middleware(['auth', 'role:Direktur'])->group(function () {
+    Route::get('/direktur/aset', [AsetController::class, 'index'])->name('direktur.aset');
+    // Route lainnya untuk Direktur...
+});
+
+Route::middleware(['auth', 'role:Ka. Sub. Bag. Perlengkapan dan Aset'])->group(function () {
+    Route::get('/perlengkapan/aset', [AsetController::class, 'index'])->name('perlengkapan.aset');
+    // Route lainnya untuk Ka. Sub. Bag. Perlengkapan dan Aset...
+});
+
+Route::middleware(['auth', 'role:Kepala Ruang Intensif Pria'])->group(function () {
+    Route::get('/intensif/aset', [AsetController::class, 'index'])->name('intensif.aset');
+    // Route lainnya untuk Kepala Ruang Intensif Pria...
 });
 
 Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard');
@@ -106,6 +131,8 @@ Route::controller(MutasiController::class)->prefix('mutasi')->group(function () 
     Route::delete('hapus/{id}', 'hapus')->name('mutasi.hapus');
 });
 
+Route::get('/mutasi/tambah/{aset}', [MutasiController::class, 'tambahDenganAset'])->name('mutasi.tambah.denganAset');
+
 Route::controller(PemeliharaanController::class)->prefix('pemeliharaan')->group(function () {
     Route::get('','index')->name('pemeliharaan');
     Route::get('tambah','tambah')->name('pemeliharaan.tambah');
@@ -114,6 +141,8 @@ Route::controller(PemeliharaanController::class)->prefix('pemeliharaan')->group(
     Route::put('edit/{id}','update')->name('pemeliharaan.tambah.update');
     Route::delete('hapus/{id}', 'hapus')->name('pemeliharaan.hapus');
 });
+
+Route::get('/pemeliharaan/tambah/{aset}', [PemeliharaanController::class, 'tambahDenganAset'])->name('pemeliharaan.tambah.denganAset');
 
 Route::controller(PeminjamanController::class)->prefix('peminjaman')->group(function () {
     Route::get('','index')->name('peminjaman');

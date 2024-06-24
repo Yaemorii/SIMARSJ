@@ -16,12 +16,27 @@ class MutasiController extends Controller
         return view('mutasi.index', ['data' => $mutasi]);
     }
 
-    public function tambah()
+    // public function tambah()
+    // {
+    //     $asets = Aset::all();  
+    //     $jenmutasi = JenisMutasi::all();  
+    //     $ruangan = Ruangan::all();  // Retrieve all rooms
+    //     return view('mutasi.form', ['asets' => $asets, 'jenmutasi' => $jenmutasi, 'ruangan' => $ruangan]);
+    // }
+
+    public function tambahDenganAset($asetId)
     {
-        $asets = Aset::all();  
-        $jenmutasi = JenisMutasi::all();  
-        $ruangan = Ruangan::all();  // Retrieve all rooms
-        return view('mutasi.form', ['asets' => $asets, 'jenmutasi' => $jenmutasi, 'ruangan' => $ruangan]);
+        $asets = Aset::all();
+        $jenmutasi = JenisMutasi::all();
+        $ruangan = Ruangan::all();
+        $selectedAset = Aset::find($asetId); // Mendapatkan aset yang dipilih
+    
+        return view('mutasi.form', [
+            'asets' => $asets,
+            'jenmutasi' => $jenmutasi,
+            'ruangan' => $ruangan,
+            'selectedAset' => $selectedAset
+        ]);
     }
 
     public function simpan(Request $request)
@@ -40,10 +55,11 @@ class MutasiController extends Controller
 
     public function edit($id)
     {
-        $mutasi = Mutasi::where('id', $id)->first();
+        $mutasi = Mutasi::with('asset')->where('id', $id)->first();
         $asets = Aset::all();
         $jenmutasi = JenisMutasi::all();  
         $ruangan = Ruangan::all();
+        $selectedAset = $mutasi->asset; // Mendapatkan aset yang terkait dengan mutasi
         return view('mutasi.form', ['mutasi' => $mutasi, 'asets' => $asets, 'jenmutasi' => $jenmutasi, 'ruangan' => $ruangan]);
     }
 

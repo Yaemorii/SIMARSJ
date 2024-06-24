@@ -21,8 +21,4 @@ class Pemeliharaan extends Model
         return $this->belongsTo(JenisPemeliharaan::class, 'jenis_pemeliharaan');
     }
 
-    public function ruanganAsal()
-    {
-        return $this->belongsTo(Ruangan::class, 'ruangan');
-    }
 }

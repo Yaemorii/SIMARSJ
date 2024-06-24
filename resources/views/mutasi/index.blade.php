@@ -9,9 +9,9 @@
         </div>
         <div class="card-body">
             <div class="table-responsive">
-                <div class="d-flex justify-content-end">
+                {{-- <div class="d-flex justify-content-end">
                     <a href="{{ route('mutasi.tambah') }}" class="btn btn-primary">+ Tambah Data</a>
-                </div>
+                </div> --}}
                 <table class="table table-bordered mt-3" id="dataTable" width="100%" cellspacing="0">
                     <thead>
                         <tr>
@@ -76,13 +76,13 @@
                                                     <p><strong>Satuan:</strong> {{ $row->asset->satuanAset->nama_satuan ?? 'N/A' }}</p>
                                                     <p><strong>Tahun Pembelian:</strong> {{ $row->asset->tahun_pembelian }}</p>
                                                     <p><strong>Sumber Dana:</strong> {{ $row->asset->sumberDana->kode_sumberdana ?? 'N/A' }}</p>
-                                                    {{-- @if ($row->asset->kategori_aset == 'Kendaraan')
-                                                        <p><strong>Pabrik:</strong> {{ $row->asset->pabrik }}</p>
-                                                        <p><strong>No.Rangka:</strong> {{ $row->asset->rangka }}</p>
-                                                        <p><strong>No.Mesin:</strong> {{ $row->asset->mesin }}</p>
-                                                        <p><strong>No.Polisi:</strong> {{ $row->asset->polisi }}</p>
-                                                        <p><strong>No.BPKB:</strong> {{ $row->asset->bpkb }}</p>
-                                                    @endif --}}
+                                                    @if ($row->asset->kategoriAset->kategori === 'Kendaraan Bermotor')
+                                                        <p><strong>Pabrik:</strong> {{ $row->pabrik }}</p>
+                                                        <p><strong>No. Rangka:</strong> {{ $row->asset->rangka }}</p>
+                                                        <p><strong>No. Mesin:</strong> {{ $row->asset->mesin }}</p>
+                                                        <p><strong>No. Polisi:</strong> {{ $row->asset->polisi }}</p>
+                                                        <p><strong>No. BPKB:</strong> {{ $row->asset->bpkb }}</p>
+                                                    @endif
                                                     <p><strong>Kondisi:</strong> {{ $row->asset->kondisiAset->nama_kondisi ?? 'N/A'}}</p>
                                                     <p><strong>Jenis Mutasi:</strong> {{ $row->jenisMutasi->jenismutasi }}</p>
                                                     <p><strong>Ruangan Tujuan:</strong>

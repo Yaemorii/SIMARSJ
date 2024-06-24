@@ -9,9 +9,6 @@
         </div>
         <div class="card-body">
             <div class="table-responsive">
-                <div class="d-flex justify-content-end">
-                    <a href="{{ route('pemeliharaan.tambah') }}" class="btn btn-primary">+ Tambah Data</a>
-                </div>
                 <table class="table table-bordered mt-3" id="dataTable" width="100%" cellspacing="0">
                     <thead>
                         <tr>
@@ -30,10 +27,10 @@
                             <tr>
                                 <th>{{ $no++ }}</th>
                                 <td>{{ $row->tgl_pemeliharaan }}</td>
-                                <td>{{ $row->jenis_pemeliharaan }}</td>
+                                <td>{{ $row->jenisPemeliharaan->jenispemeliharaan }}</td>
                                 <td>{{ $row->asset->nama_aset ?? 'N/A' }}</td>
-                                <td>{{ $row->ruanganAsal->nama_ruangan ?? 'N/A' }}</td>
-                                <td>{{ $row->biaya_pemeliharaan }}</td>
+                                <td>{{ $row->asset->ruanganAsal->nama_ruangan ?? 'N/A' }}</td>
+                                <td>Rp.{{ $row->biaya_pemeliharaan }}</td>
                                 <td>
                                     <a href="{{ route('pemeliharaan.edit', $row->id) }}" class="btn btn-warning">Edit</a>
                                     <button class="btn btn-danger" data-toggle="modal"
@@ -56,13 +53,13 @@
                                             </button>
                                         </div>
                                         <div class="modal-body">
-                                            Apakah anda yakin ingin menghapus data mutasi
+                                            Apakah anda yakin ingin menghapus data pemeliharaan
                                             "{{ $row->asset->nama_aset ?? 'N/A' }}"?
                                         </div>
                                         <div class="modal-footer">
                                             <button type="button" class="btn btn-secondary"
                                                 data-dismiss="modal">Batal</button>
-                                            <form action="{{ route('mutasi.hapus', $row->id) }}" method="POST"
+                                            <form action="{{ route('pemeliharaan.hapus', $row->id) }}" method="POST"
                                                 class="d-inline">
                                                 @csrf
                                                 @method('DELETE')
@@ -101,26 +98,26 @@
                                                     <p><strong>Jenis Pemeliharaan:</strong> {{ $row->jenisPemeliharaan->jenispemeliharaan }}
                                                     </p>
                                                     <p><strong>Biaya Pemeliharaan:</strong> Rp.{{ $row->biaya_pemeliharaan }}
-                                                    <p><strong>Nama Aset:</strong> {{ $row->asset->nama_aset }}</p>
-                                                    <p><strong>Kode Aset:</strong> {{ $row->asset->kode_aset }}</p>
-                                                    <p><strong>No. Register:</strong> {{ $row->asset->no_register }}</p>
-                                                    <p><strong>Merek:</strong> {{ $row->asset->merek }}</p>
+                                                    <p><strong>Nama Aset:</strong> {{ $row->asset->nama_aset ?? 'N/A' }}</p>
+                                                    <p><strong>Kode Aset:</strong> {{ $row->asset->kode_aset ?? 'N/A' }}</p>
+                                                    <p><strong>No. Register:</strong> {{ $row->asset->no_register ?? 'N/A'}}</p>
+                                                    <p><strong>Merek:</strong> {{ $row->asset->merek ?? 'N/A' }}</p>
                                                     <p><strong>Kategori Aset:</strong> {{ $row->asset->kategoriAset->kategori ?? 'N/A' }}</p>
                                                     <p><strong>Satuan:</strong> {{ $row->asset->satuanAset->nama_satuan ?? 'N/A' }}</p>
-                                                    <p><strong>Tahun Pembelian:</strong> {{ $row->asset->tahun_pembelian }}</p>
+                                                    <p><strong>Tahun Pembelian:</strong> {{ $row->asset->tahun_pembelian ?? 'N/A' }}</p>
                                                     <p><strong>Sumber Dana:</strong> {{ $row->asset->sumberDana->kode_sumberdana ?? 'N/A' }}</p>
-                                                    {{-- @if ($row->asset->kategori_aset == 'Kendaraan')
-                                                        <p><strong>Pabrik:</strong> {{ $row->asset->pabrik }}</p>
-                                                        <p><strong>No.Rangka:</strong> {{ $row->asset->rangka }}</p>
-                                                        <p><strong>No.Mesin:</strong> {{ $row->asset->mesin }}</p>
-                                                        <p><strong>No.Polisi:</strong> {{ $row->asset->polisi }}</p>
-                                                        <p><strong>No.BPKB:</strong> {{ $row->asset->bpkb }}</p>
-                                                    @endif --}}
-                                                    <p><strong>Kondisi:</strong> {{ $row->asset->kondisiAset->nama_kondisi }}</p>
+                                                    @if ($row->asset->kategoriAset->kategori === 'Kendaraan Bermotor')
+                                                        <p><strong>Pabrik:</strong> {{ $row->pabrik }}</p>
+                                                        <p><strong>No. Rangka:</strong> {{ $row->asset->rangka }}</p>
+                                                        <p><strong>No. Mesin:</strong> {{ $row->asset->mesin }}</p>
+                                                        <p><strong>No. Polisi:</strong> {{ $row->asset->polisi }}</p>
+                                                        <p><strong>No. BPKB:</strong> {{ $row->asset->bpkb }}</p>
+                                                    @endif
+                                                    <p><strong>Kondisi:</strong> {{ $row->asset->kondisiAset->nama_kondisi ?? 'N/A'}}</p>
                                                     <p><strong>Ruangan:</strong>
-                                                        {{ $row->ruanganAsal->nama_ruangan ?? 'N/A' }}</p>
+                                                        {{ $row->asset->ruanganAsal->nama_ruangan ?? 'N/A' }}</p>
                                                     <p><strong>Penanggung Jawab:</strong>
-                                                        {{ $row->ruanganAsal->penanggung_jawab ?? 'N/A' }}</p>
+                                                        {{ $row->asset->ruanganAsal->penanggung_jawab ?? 'N/A' }}</p>
                                                 </div>
                                             </div>
                                         </div>

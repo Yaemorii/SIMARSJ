@@ -25,6 +25,7 @@
     </li>
 
     <!-- Master Menu -->
+    @if(auth()->user()->role == 'Admin')
     <li class="nav-item">
         <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseMaster" aria-expanded="true" aria-controls="collapseMaster">
             <i class="fa-solid fa-folder"></i>
@@ -42,6 +43,7 @@
             </div>
         </div>
     </li>
+    @endif
 
     <li class="nav-item">
         <a class="nav-link" href="{{ route('aset') }}">
@@ -49,6 +51,7 @@
             <span>Data Aset</span></a>
     </li>
 
+    @if(auth()->user()->role == 'Admin')
     <li class="nav-item">
         <a class="nav-link" href="{{ route('mutasi') }}">
             <i class="fa-solid fa-arrow-right-arrow-left"></i>
@@ -84,9 +87,10 @@
             <i class="fa-solid fa-gear"></i>
             <span>Hak Akses</span></a>
     </li>
+    @endif
 
     <li class="nav-item">
-        <a class="nav-link" href="#">
+        <a class="nav-link" href="{{ route('login') }}">
             <i class="fa-solid fa-right-from-bracket"></i>
             <span>Log Out</span></a>
     </li>

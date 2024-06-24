@@ -12,7 +12,7 @@ class PemeliharaanController extends Controller
 {
     public function index ()
     {
-        $pemeliharaan = Pemeliharaan::with(['asset', 'ruanganAsal', 'asset.kategoriAset', 'asset.kondisiAset', 'asset.satuanAset', 'asset.sumberDana', 'jenisPemeliharaan'])->get();
+        $pemeliharaan = Pemeliharaan::with(['asset', 'asset.kategoriAset', 'asset.kondisiAset', 'asset.satuanAset', 'asset.sumberDana', 'jenisPemeliharaan'])->get();
         return view('pemeliharaan.index', ['data' => $pemeliharaan]);
     }
 
@@ -22,6 +22,21 @@ class PemeliharaanController extends Controller
         $jenpel = JenisPemeliharaan::all();
         $ruangan = Ruangan::all();
         return view('pemeliharaan.form', ['asets' => $asets, 'jenpel' => $jenpel, 'ruangan' => $ruangan]);
+    }
+
+    public function tambahDenganAset($asetId)
+    {
+        $asets = Aset::all();
+        $jenpel = JenisPemeliharaan::all();
+        $ruangan = Ruangan::all();
+        $selectedAset = Aset::find($asetId); // Mendapatkan aset yang dipilih
+    
+        return view('pemeliharaan.form', [
+            'asets' => $asets,
+            'jenpel' => $jenpel,
+            'ruangan' => $ruangan,
+            'selectedAset' => $selectedAset
+        ]);
     }
 
     public function simpan(Request $request)
@@ -41,10 +56,11 @@ class PemeliharaanController extends Controller
 
     public function edit($id)
     {
-        $pemeliharaan = Pemeliharaan::where('id', $id)->first();
+        $pemeliharaan = Pemeliharaan::with('asset')->where('id', $id)->first();
         $asets = Aset::all();
         $jenpel = JenisPemeliharaan::all();
         $ruangan = Ruangan::all();
+        $selectedAset = $pemeliharaan->asset;
         return view('pemeliharaan.form', ['pemeliharaan' => $pemeliharaan, 'asets' => $asets, 'jenpel' => $jenpel, 'ruangan' => $ruangan]);
     }
 

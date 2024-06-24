@@ -24,10 +24,13 @@ class PeminjamanController extends Controller
 
     public function simpan(Request $request)
     {
+        // Handle case where 'aset_dipinjam' is a single string or an array
+        $asetDipinjam = is_array($request->aset_dipinjam) ? $request->aset_dipinjam[0] : $request->aset_dipinjam;
+
         $peminjaman = [
             'tgl_pinjam'      => $request->tgl_pinjam,
             'tgl_kembali'     => $request->tgl_kembali,
-            'aset_dipinjam'   => $request->aset_dipinjam,
+            'aset_dipinjam'   => $asetDipinjam,
             'peminjam'        => $request->peminjam,
             'ruangan_peminjam'=> $request->ruangan_peminjam,
         ];
@@ -42,15 +45,20 @@ class PeminjamanController extends Controller
         $peminjaman = Pinjam::where('id', $id)->first();
         $asets = Aset::all();
         $ruangan = Ruangan::all();
-        return view('peminjaman.form', ['peminjaman' => $peminjaman, 'asets' => $asets, 'ruangan' => $ruangan]);
+        // Convert the single asset to an array for the edit view
+        $selectedAsets = [$peminjaman->aset_dipinjam];
+        return view('peminjaman.form', ['peminjaman' => $peminjaman, 'asets' => $asets, 'ruangan' => $ruangan, 'selectedAsets' => $selectedAsets]);
     }
 
     public function update($id, Request $request)
     {
+        // Handle case where 'aset_dipinjam' is a single string or an array
+        $asetDipinjam = is_array($request->aset_dipinjam) ? $request->aset_dipinjam[0] : $request->aset_dipinjam;
+
         $peminjaman = [
             'tgl_pinjam'      => $request->tgl_pinjam,
             'tgl_kembali'     => $request->tgl_kembali,
-            'aset_dipinjam'   => $request->aset_dipinjam,
+            'aset_dipinjam'   => $asetDipinjam,
             'peminjam'        => $request->peminjam,
             'ruangan_peminjam'=> $request->ruangan_peminjam,
         ];

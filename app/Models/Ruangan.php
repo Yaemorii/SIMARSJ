@@ -9,5 +9,5 @@ class Ruangan extends Model
 {
     use HasFactory;
 
-    protected $fillable = ['no_gedung', 'no_lantai', 'no_ruangan', 'nama_ruangan', 'penanggung_jawab', 'nip' ];
+    protected $fillable = ['no_gedung', 'no_lantai', 'no_ruangan', 'nama_ruangan', 'penanggung_jawab', 'jabatan', 'nip' ];
 }

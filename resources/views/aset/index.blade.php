@@ -22,9 +22,11 @@
         </div>
         <div class="card-body">
             <div class="table-responsive">
+                @if(auth()->user()->role == 'Admin')
                 <div class="d-flex justify-content-end">
                     <a href="{{ route('aset.tambah') }}" class="btn btn-primary">+ Tambah Data</a>
                 </div>
+                @endif
                 <table class="table table-bordered mt-3" id="dataTable" width="100%" cellspacing="0">
                     <thead>
                         <tr>
@@ -38,7 +40,9 @@
                             <th>Sumber Dana</th>
                             <th>Kondisi</th>
                             <th>Ruangan</th>
+                            @if(auth()->user()->role == 'Admin')
                             <th>Aksi</th>
+                            @endif
                         </tr>
                     </thead>
                     <tbody>
@@ -61,12 +65,16 @@
                                 <td>{{ $row->sumberDana->kode_sumberdana ?? 'N/A' }}</td>
                                 <td>{{ $row->kondisiAset->kode_kondisi ?? 'N/A' }}</td>
                                 <td>{{ $row->ruanganAsal->nama_ruangan ?? 'N/A' }}</td>
+                                @if(auth()->user()->role == 'Admin')
                                 <td>
                                     <a href="{{ route('aset.edit', $row->id) }}" class="btn btn-warning"><i class="fa-solid fa-pen-to-square"></i></a>
                                     <button class="btn btn-danger" data-toggle="modal"
                                         data-target="#hapusModal{{ $row->id }}"><i class="fa-solid fa-trash-can"></i></button>
                                     <button type="button" class="btn btn-info" data-toggle="modal"
-                                        data-target="#detailModal{{ $row->id }}"><i class="fa-solid fa-circle-info"></i></button>
+                                        data-target="#detailModal{{ $row->id }}"><i class="fa-solid fa-circle-info"></i></button>                                        
+                                    <a href="{{ route('mutasi.tambah.denganAset', $row->id) }}" class="btn btn-primary"><i class="fa-solid fa-arrow-right-arrow-left"></i></a>
+                                    <a href="{{ route('pemeliharaan.tambah.denganAset', $row->id) }}" class="btn btn-success"><i class="fa-solid fa-gears"></i></i></a>
+                                    @endif
                                 </td>
                             </tr>
 
@@ -107,6 +115,7 @@
                                                         <p><strong>No. Polisi:</strong> {{ $row->polisi }}</p>
                                                         <p><strong>No. BPKB:</strong> {{ $row->bpkb }}</p>
                                                     @endif
+                                                    <p><strong>Ruangan Asal:</strong> {{ $row->ruanganAsal->nama_ruangan ?? 'N/A' }}</p>
                                                     <p><strong>Kondisi:</strong> {{ $row->kondisiAset->nama_kondisi ?? 'N/A' }}</p>
                                                     <p><strong>Harga Satuan:</strong> Rp.{{ $row->harga }}</p>
                                                     <p><strong>Keterangan:</strong> {{ $row->keterangan }}</p>

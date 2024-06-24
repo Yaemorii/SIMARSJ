@@ -17,14 +17,19 @@
                 <div class="card-body">
                     <div class="form-group">
                         <label for="aset_mutasi">Aset yang dimutasi</label>
-                        <select class="form-control select2" id="aset_mutasi" name="aset_mutasi">
-                            <option disabled {{ !isset($mutasi) ? 'selected' : '' }}>Pilih Aset</option>
-                            @foreach($asets as $aset)
-                                <option value="{{ $aset->id }}" {{ isset($mutasi) && $mutasi->aset_mutasi == $aset->id ? 'selected' : '' }}>
-                                    {{ $aset->nama_aset }} - {{ $aset->merek }} - {{ $aset->kode_aset }}
-                                </option>
-                            @endforeach
-                        </select>
+                        @if(isset($selectedAset) || isset($mutasi))
+                            <input type="text" class="form-control" value="{{ isset($selectedAset) ? $selectedAset->nama_aset . ' - ' . $selectedAset->merek . ' - ' . $selectedAset->kode_aset : (isset($mutasi) ? $mutasi->asset->nama_aset . ' - ' . $mutasi->asset->merek . ' - ' . $mutasi->asset->kode_aset : '') }}" disabled>
+                            <input type="hidden" name="aset_mutasi" value="{{ isset($selectedAset) ? $selectedAset->id : (isset($mutasi) ? $mutasi->asset->id : '') }}">
+                        @else
+                            <select class="form-control select2" id="aset_mutasi" name="aset_mutasi">
+                                <option disabled {{ !isset($mutasi) ? 'selected' : '' }}>Pilih Aset</option>
+                                @foreach($asets as $aset)
+                                    <option value="{{ $aset->id }}" {{ (isset($selectedAset) && $selectedAset->id == $aset->id) || (isset($mutasi) && $mutasi->aset_mutasi == $aset->id) ? 'selected' : '' }}>
+                                        {{ $aset->nama_aset }} - {{ $aset->merek }} - {{ $aset->kode_aset }}
+                                    </option>
+                                @endforeach
+                            </select>
+                        @endif
                     </div>
                     <div class="form-group">
                         <label for="jenis_mutasi">Jenis Mutasi</label>

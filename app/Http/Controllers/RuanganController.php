@@ -27,6 +27,7 @@ class RuanganController extends Controller
             'no_ruangan'        => $request->no_ruangan,
             'nama_ruangan'      => $request->nama_ruangan,
             'penanggung_jawab'  => $request->penanggung_jawab,
+            'jabatan'           => $request->jabatan,
             'nip'               => $request->nip,
         ];
 
@@ -50,6 +51,7 @@ class RuanganController extends Controller
             'no_ruangan'        => $request->no_ruangan,
             'nama_ruangan'      => $request->nama_ruangan,
             'penanggung_jawab'  => $request->penanggung_jawab,
+            'jabatan'           => $request->jabatan,
             'nip'               => $request->nip,
         ];
         Ruangan::find($id)->update($ruangan);
