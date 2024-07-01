@@ -83,14 +83,14 @@
     </li>
 
     <li class="nav-item">
-        <a class="nav-link" href="#">
+        <a class="nav-link" href="hakakses">
             <i class="fa-solid fa-gear"></i>
             <span>Hak Akses</span></a>
     </li>
     @endif
 
     <li class="nav-item">
-        <a class="nav-link" href="{{ route('login') }}">
+        <a class="nav-link" href="{{ route('logout') }}">
             <i class="fa-solid fa-right-from-bracket"></i>
             <span>Log Out</span></a>
     </li>

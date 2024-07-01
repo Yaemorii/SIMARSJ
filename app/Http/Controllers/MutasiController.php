@@ -7,6 +7,7 @@ use App\Models\Aset;
 use App\Models\JenisMutasi;
 use App\Models\Ruangan;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class MutasiController extends Controller
 {

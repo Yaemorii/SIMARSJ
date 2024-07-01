@@ -35,9 +35,9 @@
                                 <td>{{ $row->jabatan }}</td>
                                 <td>{{ $row->nip }}</td>
                                 <td>
-                                    <a href="{{ route('ruangan.edit', $row->id) }}" class="btn btn-warning">Edit</a>
-                                    <a href="{{ route('ruangan.hapus', $row->id) }}" class="btn btn-danger">Hapus</a>
-                                    <button class="btn btn-info" data-toggle="modal" data-target="#detailModal{{ $row->id }}">Detail</button>
+                                    <a href="{{ route('ruangan.edit', $row->id) }}" class="btn btn-warning"><i class="fa-solid fa-pen-to-square"></i></a>
+                                    <a href="{{ route('ruangan.hapus', $row->id) }}" class="btn btn-danger"><i class="fa-solid fa-trash-can"></i></a>
+                                    <button type="button" class="btn btn-info" data-toggle="modal" data-target="#detailModal{{ $row->id }}"><i class="fa-solid fa-circle-info"></i></button>
                                 </td>
                             </tr>
 

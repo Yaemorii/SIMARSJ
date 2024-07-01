@@ -7,6 +7,7 @@ use App\Models\Mutasi;
 use App\Models\Pemeliharaan;
 use App\Models\Ruangan;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class DashboardController extends Controller
 {

@@ -6,6 +6,7 @@ use App\Models\Pinjam;
 use App\Models\Aset;
 use App\Models\Ruangan;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class PeminjamanController extends Controller
 {

@@ -10,13 +10,33 @@ use App\Models\Satuan;
 use App\Models\SumberDana;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
+use Illuminate\Support\Facades\Auth;
 
 class AsetController extends Controller
 {
-    public function index()
+    public function index(Request $request)
     {
-        $aset = Aset::with(['ruanganAsal','kategoriAset', 'kondisiAset', 'satuanAset', 'sumberDana'])->get();
-        return view('aset.index', ['data' => $aset]);
+        $query = Aset::with(['ruanganAsal', 'kategoriAset', 'kondisiAset', 'satuanAset', 'sumberDana']);
+
+        if ($request->has('search')) {
+            $search = $request->input('search');
+            $query->where(function ($q) use ($search) {
+                $q->where('kode_aset', 'LIKE', "%{$search}%")
+                    ->orWhere('nama_aset', 'LIKE', "%{$search}%")
+                    ->orWhere('no_register', 'LIKE', "%{$search}%")
+                    ->orWhere('merek', 'LIKE', "%{$search}%");
+            });
+        }
+
+        if ($request->has('kategori') && $request->kategori != '') {
+            $kategori = $request->input('kategori');
+            $query->where('kategori_aset', $kategori);
+        }
+
+        $aset = $query->get();
+        $kategoris = Kategori::all();  // Ambil semua kategori untuk dropdown
+
+        return view('aset.index', ['data' => $aset, 'kategoris' => $kategoris]);
     }
 
     public function tambah()
