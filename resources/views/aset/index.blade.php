@@ -4,17 +4,44 @@
 
 @section('content')
 
-    @if (session('success'))
-        <div class="alert alert-success alert-dismissible fade show" role="alert">
-            {{ session('success') }}
-        </div>
-    @endif
+@if (session('success'))
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        Swal.fire({
+            title: 'Sukses!',
+            text: '{{ session('success') }}',
+            icon: 'success',
+            confirmButtonText: 'OK'
+        });
+    });
+</script>
+@endif
 
-    @if (session('warning'))
-        <div class="alert alert-warning alert-dismissible fade show" role="alert">
-            {{ session('warning') }}
-        </div>
-    @endif
+{{-- @if (session('warning'))
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        Swal.fire({
+            title: 'Peringatan!',
+            text: '{{ session('warning') }}',
+            icon: 'warning',
+            confirmButtonText: 'OK'
+        });
+    });
+</script>
+@endif --}}
+
+@if (session('deleted'))
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        Swal.fire({
+            title: 'Dihapus!',
+            text: '{{ session('deleted') }}',
+            icon: 'warning',
+            confirmButtonText: 'OK'
+        });
+    });
+</script>
+@endif
 
     <div class="card shadow mb-4">
         <div class="card-header py-3">

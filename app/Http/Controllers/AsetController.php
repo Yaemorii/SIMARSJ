@@ -229,6 +229,6 @@ class AsetController extends Controller
 
         $aset->delete();
 
-        return redirect()->route('aset')->with('danger', 'Data berhasil dihapus');
+        return redirect()->route('aset')->with('deleted', 'Data berhasil dihapus');
     }
 }
