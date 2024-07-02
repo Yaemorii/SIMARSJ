@@ -34,7 +34,7 @@ class AsetController extends Controller
         }
 
         $aset = $query->get();
-        $kategoris = Kategori::all();  // Ambil semua kategori untuk dropdown
+        $kategoris = Kategori::all(); 
 
         return view('aset.index', ['data' => $aset, 'kategoris' => $kategoris]);
     }

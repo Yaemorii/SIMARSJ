@@ -26,8 +26,14 @@
                         </tr>
                     </thead>
                     <tbody>
+                        @if (auth()->check())
                         @php($no = 1)
                         @foreach ($data as $row)
+                        @if (auth()->user()->role === 'Direktur' || 
+                                     (auth()->user()->role === 'Ka. Sub. Bag. Perlengkapan dan Aset' && $row->ruanganTujuan->nama_ruangan === 'Ruang Kepala Sub Bagian Perlengkapan dan Aset') ||
+                                     (auth()->user()->role === 'Kepala Ruang Intensif Pria' && $row->ruanganTujuan->nama_ruangan === 'Ruang Intensif Pria') ||
+                                     (auth()->user()->role === 'Kepala Instalasi Farmasi' && $row->ruanganTujuan->nama_ruangan === 'Instalasi Farmasi Depo II') ||
+                                     auth()->user()->role === 'Admin')
                             <tr>
                                 <td>{{ $no++ }}</td>
                                 <td>{{ $row->tgl_mutasi }}</td>
@@ -37,22 +43,24 @@
                                 <td>{{ $row->ruanganTujuan->nama_ruangan ?? 'N/A' }}</td>
                                 <td>{{ $row->alasan_mutasi }}</td>
                                 <td>
-                                    <a href="{{ route('mutasi.edit', $row->id) }}" class="btn btn-warning"><i class="fa-solid fa-pen-to-square"></i></a>
-                                    <button class="btn btn-danger" data-toggle="modal"
-                                        data-target="#hapusModal{{ $row->id }}"><i class="fa-solid fa-trash-can"></i></button>
-                                    <button type="button" class="btn btn-info" data-toggle="modal"
-                                        data-target="#detailModal{{ $row->id }}"><i class="fa-solid fa-circle-info"></i></button>
+                                    @if(auth()->user()->role === 'Admin')
+                                        <a href="{{ route('mutasi.edit', $row->id) }}" class="btn btn-warning"><i class="fa-solid fa-pen-to-square"></i></a>
+                                        <button class="btn btn-danger" data-toggle="modal" data-target="#hapusModal{{ $row->id }}"><i class="fa-solid fa-trash-can"></i></button>
+                                    @endif
+                                    <button type="button" class="btn btn-info" data-toggle="modal" data-target="#detailModal{{ $row->id }}"><i class="fa-solid fa-circle-info"></i></button>
                                 </td>
                             </tr>
+                            @endif
+                            @endforeach
+                        @endif
 
                             <!-- Modal Detail -->
-                            <div class="modal fade" id="detailModal{{ $row->id }}" tabindex="-1" role="dialog"
-                                aria-labelledby="detailModalLabel{{ $row->id }}" aria-hidden="true">
+                            @foreach ($data as $row)
+                            <div class="modal fade" id="detailModal{{ $row->id }}" tabindex="-1" role="dialog" aria-labelledby="detailModalLabel{{ $row->id }}" aria-hidden="true">
                                 <div class="modal-dialog" role="document">
                                     <div class="modal-content">
                                         <div class="modal-header">
-                                            <h5 class="modal-title" id="detailModalLabel{{ $row->id }}">Detail Mutasi:
-                                                {{ $row->asset->nama_aset ?? 'N/A' }}</h5>
+                                            <h5 class="modal-title" id="detailModalLabel{{ $row->id }}">Detail Mutasi: {{ $row->asset->nama_aset ?? 'N/A' }}</h5>
                                             <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                                                 <span aria-hidden="true">&times;</span>
                                             </button>
@@ -61,12 +69,10 @@
                                             <div class="row">
                                                 @if ($row->asset && $row->asset->gambar_aset)
                                                     <div class="col-md-4">
-                                                        <img src="{{ Storage::url($row->asset->gambar_aset) }}"
-                                                            alt="Gambar Aset" width="100%">
+                                                        <img src="{{ Storage::url($row->asset->gambar_aset) }}" alt="Gambar Aset" width="100%">
                                                     </div>
                                                 @endif
-                                                <div
-                                                    class="{{ $row->asset && $row->asset->gambar_aset ? 'col-md-8' : 'col-md-12' }}">
+                                                <div class="{{ $row->asset && $row->asset->gambar_aset ? 'col-md-8' : 'col-md-12' }}">
                                                     <p><strong>Tanggal Mutasi:</strong> {{ $row->tgl_mutasi }}</p>
                                                     <p><strong>Nama Aset:</strong> {{ $row->asset->nama_aset }}</p>
                                                     <p><strong>Kode Aset:</strong> {{ $row->asset->kode_aset }}</p>
@@ -85,40 +91,33 @@
                                                     @endif
                                                     <p><strong>Kondisi:</strong> {{ $row->asset->kondisiAset->nama_kondisi ?? 'N/A'}}</p>
                                                     <p><strong>Jenis Mutasi:</strong> {{ $row->jenisMutasi->jenismutasi }}</p>
-                                                    <p><strong>Ruangan Tujuan:</strong>
-                                                        {{ $row->ruanganTujuan->nama_ruangan ?? 'N/A' }}</p>
+                                                    <p><strong>Ruangan Tujuan:</strong> {{ $row->ruanganTujuan->nama_ruangan ?? 'N/A' }}</p>
                                                 </div>
                                             </div>
                                         </div>
                                         <div class="modal-footer">
-                                            <button type="button" class="btn btn-secondary"
-                                                data-dismiss="modal">Close</button>
+                                            <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
                                         </div>
                                     </div>
                                 </div>
                             </div>
 
                             <!-- Hapus Modal -->
-                            <div class="modal fade" id="hapusModal{{ $row->id }}" tabindex="-1" role="dialog"
-                                aria-labelledby="hapusModalLabel{{ $row->id }}" aria-hidden="true">
+                            <div class="modal fade" id="hapusModal{{ $row->id }}" tabindex="-1" role="dialog" aria-labelledby="hapusModalLabel{{ $row->id }}" aria-hidden="true">
                                 <div class="modal-dialog" role="document">
                                     <div class="modal-content">
                                         <div class="modal-header">
-                                            <h5 class="modal-title" id="hapusModalLabel{{ $row->id }}">Konfirmasi
-                                                Hapus</h5>
+                                            <h5 class="modal-title" id="hapusModalLabel{{ $row->id }}">Konfirmasi Hapus</h5>
                                             <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                                                 <span aria-hidden="true">&times;</span>
                                             </button>
                                         </div>
                                         <div class="modal-body">
-                                            Apakah anda yakin ingin menghapus data mutasi
-                                            "{{ $row->asset->nama_aset ?? 'N/A' }}"?
+                                            Apakah anda yakin ingin menghapus data mutasi "{{ $row->asset->nama_aset ?? 'N/A' }}"?
                                         </div>
                                         <div class="modal-footer">
-                                            <button type="button" class="btn btn-secondary"
-                                                data-dismiss="modal">Batal</button>
-                                            <form action="{{ route('mutasi.hapus', $row->id) }}" method="POST"
-                                                class="d-inline">
+                                            <button type="button" class="btn btn-secondary" data-dismiss="modal">Batal</button>
+                                            <form action="{{ route('mutasi.hapus', $row->id) }}" method="POST" class="d-inline">
                                                 @csrf
                                                 @method('DELETE')
                                                 <button type="submit" class="btn btn-danger">Hapus</button>

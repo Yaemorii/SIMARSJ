@@ -51,12 +51,13 @@
             <span>Data Aset</span></a>
     </li>
 
-    @if(auth()->user()->role == 'Admin')
     <li class="nav-item">
         <a class="nav-link" href="{{ route('mutasi') }}">
             <i class="fa-solid fa-arrow-right-arrow-left"></i>
             <span>Mutasi Aset</span></a>
     </li>
+
+    @if(auth()->user()->role == 'Admin')
 
     <li class="nav-item">
         <a class="nav-link" href="{{ route('pemeliharaan') }}">
