@@ -16,14 +16,6 @@ class MutasiController extends Controller
         return view('mutasi.index', ['data' => $mutasi]);
     }
 
-    // public function tambah()
-    // {
-    //     $asets = Aset::all();  
-    //     $jenmutasi = JenisMutasi::all();  
-    //     $ruangan = Ruangan::all();  // Retrieve all rooms
-    //     return view('mutasi.form', ['asets' => $asets, 'jenmutasi' => $jenmutasi, 'ruangan' => $ruangan]);
-    // }
-
     public function tambahDenganAset($asetId)
     {
         $asets = Aset::all();

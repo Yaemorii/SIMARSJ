@@ -22,7 +22,6 @@ return new class extends Migration
             $table->string('tujuan')->nullable();
             $table->string('nilai_aset')->nullable();
             $table->string('alasan_mutasi')->nullable();
-            $table->string('sumber_dana')->nullable();
             $table->timestamps();
         });
     }

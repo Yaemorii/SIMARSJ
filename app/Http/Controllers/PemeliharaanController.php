@@ -13,7 +13,7 @@ class PemeliharaanController extends Controller
 {
     public function index ()
     {
-        $pemeliharaan = Pemeliharaan::with(['asset', 'asset.kategoriAset', 'asset.kondisiAset', 'asset.satuanAset', 'asset.sumberDana', 'jenisPemeliharaan'])->get();
+        $pemeliharaan = Pemeliharaan::with(['asset', 'asset.kategoriAset', 'asset.kondisiAset', 'asset.satuanAset', 'asset.sumberDana', 'jenisPemeliharaan', 'ruanganAsal'])->get();
         return view('pemeliharaan.index', ['data' => $pemeliharaan]);
     }
 

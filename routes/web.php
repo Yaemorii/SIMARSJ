@@ -108,7 +108,7 @@ Route::middleware(['auth'])->group(function () {
         Route::post('tambah', 'simpan')->name('mutasi.tambah.simpan');
         Route::get('edit/{id}', 'edit')->name('mutasi.edit');
         Route::put('edit/{id}', 'update')->name('mutasi.tambah.update');
-        Route::delete('hapus/{id}', 'hapus')->name('mutasi.hapus');
+        Route::delete('hapus/{id}', 'hapus')->name('mutasi.hapus');     
     });
 
     Route::get('/mutasi/tambah/{aset}', [MutasiController::class, 'tambahDenganAset'])->name('mutasi.tambah.denganAset');

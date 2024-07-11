@@ -16,6 +16,11 @@ class Pemeliharaan extends Model
         return $this->belongsTo(Aset::class, 'aset_pelihara');
     }
 
+    public function ruanganAsal()
+    {
+        return $this->belongsTo(Ruangan::class, 'ruangan');
+    }
+
     public function jenisPemeliharaan()
     {
         return $this->belongsTo(JenisPemeliharaan::class, 'jenis_pemeliharaan');

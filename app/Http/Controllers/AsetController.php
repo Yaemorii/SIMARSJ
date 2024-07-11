@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Aset;
+use App\Models\Mutasi;
 use App\Models\Ruangan;
 use App\Models\Kategori;
 use App\Models\Kondisi;
@@ -35,8 +36,9 @@ class AsetController extends Controller
 
         $aset = $query->get();
         $kategoris = Kategori::all(); 
+        $mutasi = Mutasi::with('asset')->get();
 
-        return view('aset.index', ['data' => $aset, 'kategoris' => $kategoris]);
+        return view('aset.index', ['data' => $aset, 'kategoris' => $kategoris, 'mutasi' => $mutasi]);
     }
 
     public function tambah()

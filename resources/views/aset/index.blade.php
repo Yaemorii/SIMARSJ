@@ -4,44 +4,31 @@
 
 @section('content')
 
-@if (session('success'))
-<script>
-    document.addEventListener('DOMContentLoaded', function() {
-        Swal.fire({
-            title: 'Sukses!',
-            text: '{{ session('success') }}',
-            icon: 'success',
-            confirmButtonText: 'OK'
-        });
-    });
-</script>
-@endif
+    @if (session('success'))
+        <script>
+            document.addEventListener('DOMContentLoaded', function() {
+                Swal.fire({
+                    title: 'Sukses!',
+                    text: '{{ session('success') }}',
+                    icon: 'success',
+                    confirmButtonText: 'OK'
+                });
+            });
+        </script>
+    @endif
 
-{{-- @if (session('warning'))
-<script>
-    document.addEventListener('DOMContentLoaded', function() {
-        Swal.fire({
-            title: 'Peringatan!',
-            text: '{{ session('warning') }}',
-            icon: 'warning',
-            confirmButtonText: 'OK'
-        });
-    });
-</script>
-@endif --}}
-
-@if (session('deleted'))
-<script>
-    document.addEventListener('DOMContentLoaded', function() {
-        Swal.fire({
-            title: 'Dihapus!',
-            text: '{{ session('deleted') }}',
-            icon: 'warning',
-            confirmButtonText: 'OK'
-        });
-    });
-</script>
-@endif
+    @if (session('deleted'))
+        <script>
+            document.addEventListener('DOMContentLoaded', function() {
+                Swal.fire({
+                    title: 'Dihapus!',
+                    text: '{{ session('deleted') }}',
+                    icon: 'warning',
+                    confirmButtonText: 'OK'
+                });
+            });
+        </script>
+    @endif
 
     <div class="card shadow mb-4">
         <div class="card-header py-3">
@@ -84,16 +71,20 @@
                         @if (auth()->check())
                             @php($no = 1)
                             @foreach ($data as $row)
-                                @if (auth()->user()->role === 'Direktur' || 
-                                     (auth()->user()->role === 'Ka. Sub. Bag. Perlengkapan dan Aset' && $row->ruanganAsal->nama_ruangan === 'Ruang Kepala Sub Bagian Perlengkapan dan Aset') ||
-                                     (auth()->user()->role === 'Kepala Ruang Intensif Pria' && $row->ruanganAsal->nama_ruangan === 'Ruang Intensif Pria') ||
-                                     (auth()->user()->role === 'Kepala Instalasi Farmasi' && $row->ruanganAsal->nama_ruangan === 'Instalasi Farmasi Depo II') ||
-                                     auth()->user()->role === 'Admin')
+                                @if (auth()->user()->role === 'Direktur' ||
+                                        (auth()->user()->role === 'Ka. Sub. Bag. Perlengkapan dan Aset' &&
+                                            $row->ruanganAsal->nama_ruangan === 'Ruang Kepala Sub Bagian Perlengkapan dan Aset') ||
+                                        (auth()->user()->role === 'Kepala Ruang Intensif Pria' &&
+                                            $row->ruanganAsal->nama_ruangan === 'Ruang Intensif Pria') ||
+                                        (auth()->user()->role === 'Kepala Instalasi Farmasi' &&
+                                            $row->ruanganAsal->nama_ruangan === 'Instalasi Farmasi Depo II') ||
+                                        auth()->user()->role === 'Admin')
                                     <tr>
                                         <th>{{ $no++ }}</th>
                                         <td>
                                             @if ($row->gambar_aset)
-                                                <img src="{{ Storage::url($row->gambar_aset) }}" alt="Gambar Aset" width="100">
+                                                <img src="{{ Storage::url($row->gambar_aset) }}" alt="Gambar Aset"
+                                                    width="100">
                                             @else
                                                 Tidak ada gambar
                                             @endif
@@ -107,14 +98,34 @@
                                         <td>{{ $row->kondisiAset->kode_kondisi ?? 'N/A' }}</td>
                                         <td>{{ $row->ruanganAsal->nama_ruangan ?? 'N/A' }}</td>
                                         <td>
-                                            <button type="button" class="btn btn-info" data-toggle="modal" data-target="#detailModal{{ $row->id }}"><i class="fa-solid fa-circle-info"></i></button>
-                                            @if (auth()->user()->role == 'Admin')
-                                                <a href="{{ route('aset.edit', $row->id) }}" class="btn btn-warning"><i class="fa-solid fa-pen-to-square"></i></a>
-                                                <button class="btn btn-danger" data-toggle="modal" data-target="#hapusModal{{ $row->id }}"><i class="fa-solid fa-trash-can"></i></button>
-                                                <a href="{{ route('mutasi.tambah.denganAset', $row->id) }}" class="btn btn-primary"><i class="fa-solid fa-arrow-right-arrow-left"></i></a>
-                                                <a href="{{ route('pemeliharaan.tambah.denganAset', $row->id) }}" class="btn btn-success"><i class="fa-solid fa-gears"></i></a>
-                                            @endif
-                                        </td>
+                                            <div class="d-flex flex-column">
+                                                <div class="d-flex flex-row mb-2">
+                                                    <button type="button" class="btn btn-info mr-2" data-toggle="modal" data-target="#detailModal{{ $row->id }}">
+                                                        <i class="fa-solid fa-circle-info"></i>
+                                                    </button>
+                                                    @if (auth()->user()->role == 'Admin')
+                                                        <a href="{{ route('aset.edit', $row->id) }}" class="btn btn-warning">
+                                                            <i class="fa-solid fa-pen-to-square"></i>
+                                                        </a>
+                                                    @endif
+                                                </div>
+                                                @if (auth()->user()->role == 'Admin')
+                                                    <div class="d-flex flex-row mb-2">
+                                                        <button class="btn btn-danger mr-2" data-toggle="modal" data-target="#hapusModal{{ $row->id }}">
+                                                            <i class="fa-solid fa-trash-can"></i>
+                                                        </button>
+                                                        <a href="{{ route('mutasi.tambah.denganAset', $row->id) }}" class="btn btn-primary">
+                                                            <i class="fa-solid fa-arrow-right-arrow-left"></i>
+                                                        </a>
+                                                    </div>
+                                                    <div>
+                                                        <a href="{{ route('pemeliharaan.tambah.denganAset', $row->id) }}" class="btn btn-success">
+                                                            <i class="fa-solid fa-gears"></i>
+                                                        </a>
+                                                    </div>
+                                                @endif
+                                            </div>
+                                        </td>                                     
                                     </tr>
                                 @endif
                             @endforeach
@@ -122,11 +133,13 @@
 
                         <!-- Detail Modal -->
                         @foreach ($data as $row)
-                            <div class="modal fade" id="detailModal{{ $row->id }}" tabindex="-1" role="dialog" aria-labelledby="detailModalLabel{{ $row->id }}" aria-hidden="true">
+                            <div class="modal fade" id="detailModal{{ $row->id }}" tabindex="-1" role="dialog"
+                                aria-labelledby="detailModalLabel{{ $row->id }}" aria-hidden="true">
                                 <div class="modal-dialog" role="document">
                                     <div class="modal-content">
                                         <div class="modal-header">
-                                            <h5 class="modal-title" id="detailModalLabel{{ $row->id }}">Detail Aset: {{ $row->nama_aset }}</h5>
+                                            <h5 class="modal-title" id="detailModalLabel{{ $row->id }}">Detail Aset:
+                                                {{ $row->nama_aset }}</h5>
                                             <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                                                 <span aria-hidden="true">&times;</span>
                                             </button>
@@ -135,7 +148,8 @@
                                             <div class="row">
                                                 @if ($row->gambar_aset)
                                                     <div class="col-md-4">
-                                                        <img src="{{ Storage::url($row->gambar_aset) }}" alt="Gambar Aset" width="100%">
+                                                        <img src="{{ Storage::url($row->gambar_aset) }}" alt="Gambar Aset"
+                                                            width="100%">
                                                     </div>
                                                 @endif
                                                 <div class="{{ $row->gambar_aset ? 'col-md-8' : 'col-md-12' }}">
@@ -144,10 +158,13 @@
                                                     <p><strong>No. Register:</strong> {{ $row->no_register }}</p>
                                                     <p><strong>Merek:</strong> {{ $row->merek }}</p>
                                                     <p><strong>Ukuran:</strong> {{ $row->ukuran }}</p>
-                                                    <p><strong>Kategori Aset:</strong> {{ $row->kategoriAset->kategori ?? 'N/A' }}</p>
-                                                    <p><strong>Satuan:</strong> {{ $row->satuanAset->nama_satuan ?? 'N/A' }}</p>
+                                                    <p><strong>Kategori Aset:</strong>
+                                                        {{ $row->kategoriAset->kategori ?? 'N/A' }}</p>
+                                                    <p><strong>Satuan:</strong>
+                                                        {{ $row->satuanAset->nama_satuan ?? 'N/A' }}</p>
                                                     <p><strong>Tahun Pembelian:</strong> {{ $row->tahun_pembelian }}</p>
-                                                    <p><strong>Sumber Dana:</strong> {{ $row->sumberDana->sumberdana ?? 'N/A' }}</p>
+                                                    <p><strong>Sumber Dana:</strong>
+                                                        {{ $row->sumberDana->sumberdana ?? 'N/A' }}</p>
                                                     @if ($row->kategoriAset->kategori === 'Kendaraan Bermotor')
                                                         <p><strong>Pabrik:</strong> {{ $row->pabrik }}</p>
                                                         <p><strong>No. Rangka:</strong> {{ $row->rangka }}</p>
@@ -155,26 +172,31 @@
                                                         <p><strong>No. Polisi:</strong> {{ $row->polisi }}</p>
                                                         <p><strong>No. BPKB:</strong> {{ $row->bpkb }}</p>
                                                     @endif
-                                                    <p><strong>Ruangan Asal:</strong> {{ $row->ruanganAsal->nama_ruangan ?? 'N/A' }}</p>
-                                                    <p><strong>Kondisi:</strong> {{ $row->kondisiAset->nama_kondisi ?? 'N/A' }}</p>
+                                                    <p><strong>Ruangan Asal:</strong>
+                                                        {{ $row->ruanganAsal->nama_ruangan ?? 'N/A' }}</p>
+                                                    <p><strong>Kondisi:</strong>
+                                                        {{ $row->kondisiAset->nama_kondisi ?? 'N/A' }}</p>
                                                     <p><strong>Harga Satuan:</strong> Rp.{{ $row->harga }}</p>
                                                     <p><strong>Keterangan:</strong> {{ $row->keterangan }}</p>
                                                 </div>
                                             </div>
                                         </div>
                                         <div class="modal-footer">
-                                            <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                                            <button type="button" class="btn btn-secondary"
+                                                data-dismiss="modal">Close</button>
                                         </div>
                                     </div>
                                 </div>
                             </div>
 
                             <!-- Hapus Modal -->
-                            <div class="modal fade" id="hapusModal{{ $row->id }}" tabindex="-1" role="dialog" aria-labelledby="hapusModalLabel{{ $row->id }}" aria-hidden="true">
+                            <div class="modal fade" id="hapusModal{{ $row->id }}" tabindex="-1" role="dialog"
+                                aria-labelledby="hapusModalLabel{{ $row->id }}" aria-hidden="true">
                                 <div class="modal-dialog" role="document">
                                     <div class="modal-content">
                                         <div class="modal-header">
-                                            <h5 class="modal-title" id="hapusModalLabel{{ $row->id }}">Konfirmasi Hapus</h5>
+                                            <h5 class="modal-title" id="hapusModalLabel{{ $row->id }}">Konfirmasi
+                                                Hapus</h5>
                                             <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                                                 <span aria-hidden="true">&times;</span>
                                             </button>
@@ -186,7 +208,8 @@
                                             <form action="{{ route('aset.hapus', $row->id) }}" method="POST">
                                                 @csrf
                                                 @method('DELETE')
-                                                <button type="button" class="btn btn-secondary" data-dismiss="modal">Batal</button>
+                                                <button type="button" class="btn btn-secondary"
+                                                    data-dismiss="modal">Batal</button>
                                                 <button type="submit" class="btn btn-danger">Hapus</button>
                                             </form>
                                         </div>

@@ -22,25 +22,48 @@
                         </tr>
                     </thead>
                     <tbody>
-                        @php($no = 1)
-                        @foreach ($data as $row)
-                            <tr>
-                                <th>{{ $no++ }}</th>
-                                <td>{{ $row->tgl_pemeliharaan }}</td>
-                                <td>{{ $row->jenisPemeliharaan->jenispemeliharaan }}</td>
-                                <td>{{ $row->asset->nama_aset ?? 'N/A' }}</td>
-                                <td>{{ $row->asset->ruanganAsal->nama_ruangan ?? 'N/A' }}</td>
-                                <td>Rp.{{ $row->biaya_pemeliharaan }}</td>
-                                <td>
-                                    <a href="{{ route('pemeliharaan.edit', $row->id) }}" class="btn btn-warning">Edit</a>
-                                    <button class="btn btn-danger" data-toggle="modal"
-                                        data-target="#hapusModal{{ $row->id }}">Hapus</button>
-                                    <button type="button" class="btn btn-info" data-toggle="modal"
-                                        data-target="#detailModal{{ $row->id }}">Detail</button>
-                                </td>
-                            </tr>
+                        @if (auth()->check())
+                            @php($no = 1)
+                            @foreach ($data as $row)
+                                @if (auth()->user()->role === 'Direktur' ||
+                                        (auth()->user()->role === 'Ka. Sub. Bag. Perlengkapan dan Aset' &&
+                                            optional($row->asset->ruanganAsal)->nama_ruangan === 'Ruang Kepala Sub Bagian Perlengkapan dan Aset') ||
+                                        (auth()->user()->role === 'Kepala Ruang Intensif Pria' &&
+                                            optional($row->asset->ruanganAsal)->nama_ruangan === 'Ruang Intensif Pria') ||
+                                        (auth()->user()->role === 'Kepala Instalasi Farmasi' &&
+                                            optional($row->asset->ruanganAsal)->nama_ruangan === 'Instalasi Farmasi Depo II') ||
+                                        auth()->user()->role === 'Admin')
+                                    <tr>
+                                        <th>{{ $no++ }}</th>
+                                        <td>{{ $row->tgl_pemeliharaan }}</td>
+                                        <td>{{ $row->jenisPemeliharaan->jenispemeliharaan }}</td>
+                                        <td>{{ $row->asset->nama_aset ?? 'N/A' }}</td>
+                                        <td>{{ optional($row->asset->ruanganAsal)->nama_ruangan ?? 'N/A' }}</td>
+                                        <td>Rp.{{ $row->biaya_pemeliharaan }}</td>
+                                        <td>
+                                            <div class="d-flex flex-column">
+                                                <div class="d-flex flex-row mb-2">
+                                                    @if (auth()->user()->role === 'Admin')
+                                                        <a href="{{ route('pemeliharaan.edit', $row->id) }}"
+                                                            class="btn btn-warning mr-2"><i
+                                                                class="fa-solid fa-pen-to-square"></i></a>
+                                                        <button class="btn btn-danger mr-2" data-toggle="modal"
+                                                            data-target="#hapusModal{{ $row->id }}"><i
+                                                                class="fa-solid fa-trash-can"></i></button>
+                                                    @endif
+                                                    <button type="button" class="btn btn-info" data-toggle="modal"
+                                                        data-target="#detailModal{{ $row->id }}"><i
+                                                            class="fa-solid fa-circle-info"></i></button>
+                                                </div>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                @endif
+                            @endforeach
+                        @endif
 
-                            {{-- Modal Hapus --}}
+                        {{-- Modal Hapus --}}
+                        @foreach ($data as $row)
                             <div class="modal fade" id="hapusModal{{ $row->id }}" tabindex="-1" role="dialog"
                                 aria-labelledby="hapusModalLabel{{ $row->id }}" aria-hidden="true">
                                 <div class="modal-dialog" role="document">
@@ -69,8 +92,11 @@
                                     </div>
                                 </div>
                             </div>
+                        @endforeach
 
-                            {{-- Modal Detail --}}
+
+                        {{-- Modal Detail --}}
+                        @foreach ($data as $row)
                             <div class="modal fade" id="detailModal{{ $row->id }}" tabindex="-1" role="dialog"
                                 aria-labelledby="detailModalLabel{{ $row->id }}" aria-hidden="true">
                                 <div class="modal-dialog" role="document">
@@ -95,17 +121,27 @@
                                                     class="{{ $row->asset && $row->asset->gambar_aset ? 'col-md-8' : 'col-md-12' }}">
                                                     <p><strong>Tanggal Pemeliharaan:</strong> {{ $row->tgl_pemeliharaan }}
                                                     </p>
-                                                    <p><strong>Jenis Pemeliharaan:</strong> {{ $row->jenisPemeliharaan->jenispemeliharaan }}
+                                                    <p><strong>Jenis Pemeliharaan:</strong>
+                                                        {{ $row->jenisPemeliharaan->jenispemeliharaan }}
                                                     </p>
-                                                    <p><strong>Biaya Pemeliharaan:</strong> Rp.{{ $row->biaya_pemeliharaan }}
-                                                    <p><strong>Nama Aset:</strong> {{ $row->asset->nama_aset ?? 'N/A' }}</p>
-                                                    <p><strong>Kode Aset:</strong> {{ $row->asset->kode_aset ?? 'N/A' }}</p>
-                                                    <p><strong>No. Register:</strong> {{ $row->asset->no_register ?? 'N/A'}}</p>
+                                                    <p><strong>Biaya Pemeliharaan:</strong>
+                                                        Rp.{{ $row->biaya_pemeliharaan }}
+                                                    <p><strong>Nama Aset:</strong> {{ $row->asset->nama_aset ?? 'N/A' }}
+                                                    </p>
+                                                    <p><strong>Kode Aset:</strong> {{ $row->asset->kode_aset ?? 'N/A' }}
+                                                    </p>
+                                                    <p><strong>No. Register:</strong>
+                                                        {{ $row->asset->no_register ?? 'N/A' }}
+                                                    </p>
                                                     <p><strong>Merek:</strong> {{ $row->asset->merek ?? 'N/A' }}</p>
-                                                    <p><strong>Kategori Aset:</strong> {{ $row->asset->kategoriAset->kategori ?? 'N/A' }}</p>
-                                                    <p><strong>Satuan:</strong> {{ $row->asset->satuanAset->nama_satuan ?? 'N/A' }}</p>
-                                                    <p><strong>Tahun Pembelian:</strong> {{ $row->asset->tahun_pembelian ?? 'N/A' }}</p>
-                                                    <p><strong>Sumber Dana:</strong> {{ $row->asset->sumberDana->kode_sumberdana ?? 'N/A' }}</p>
+                                                    <p><strong>Kategori Aset:</strong>
+                                                        {{ $row->asset->kategoriAset->kategori ?? 'N/A' }}</p>
+                                                    <p><strong>Satuan:</strong>
+                                                        {{ $row->asset->satuanAset->nama_satuan ?? 'N/A' }}</p>
+                                                    <p><strong>Tahun Pembelian:</strong>
+                                                        {{ $row->asset->tahun_pembelian ?? 'N/A' }}</p>
+                                                    <p><strong>Sumber Dana:</strong>
+                                                        {{ $row->asset->sumberDana->kode_sumberdana ?? 'N/A' }}</p>
                                                     @if ($row->asset->kategoriAset->kategori === 'Kendaraan Bermotor')
                                                         <p><strong>Pabrik:</strong> {{ $row->pabrik }}</p>
                                                         <p><strong>No. Rangka:</strong> {{ $row->asset->rangka }}</p>
@@ -113,7 +149,8 @@
                                                         <p><strong>No. Polisi:</strong> {{ $row->asset->polisi }}</p>
                                                         <p><strong>No. BPKB:</strong> {{ $row->asset->bpkb }}</p>
                                                     @endif
-                                                    <p><strong>Kondisi:</strong> {{ $row->asset->kondisiAset->nama_kondisi ?? 'N/A'}}</p>
+                                                    <p><strong>Kondisi:</strong>
+                                                        {{ $row->asset->kondisiAset->nama_kondisi ?? 'N/A' }}</p>
                                                     <p><strong>Ruangan:</strong>
                                                         {{ $row->asset->ruanganAsal->nama_ruangan ?? 'N/A' }}</p>
                                                     <p><strong>Penanggung Jawab:</strong>

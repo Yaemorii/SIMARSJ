@@ -57,8 +57,6 @@
             <span>Mutasi Aset</span></a>
     </li>
 
-    @if(auth()->user()->role == 'Admin')
-
     <li class="nav-item">
         <a class="nav-link" href="{{ route('pemeliharaan') }}">
             <i class="fa-solid fa-gears"></i>
@@ -77,6 +75,8 @@
             <span>Ruangan</span></a>
     </li>
 
+    @if(auth()->user()->role == 'Admin')
+
     <li class="nav-item active">
         <a class="nav-link menu-header">
             <i class="fa-solid"></i>
@@ -89,11 +89,4 @@
             <span>Hak Akses</span></a>
     </li>
     @endif
-
-    <li class="nav-item">
-        <a class="nav-link" href="{{ route('logout') }}">
-            <i class="fa-solid fa-right-from-bracket"></i>
-            <span>Log Out</span></a>
-    </li>
-
 </ul>
