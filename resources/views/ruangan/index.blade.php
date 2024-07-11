@@ -10,7 +10,9 @@
         <div class="card-body">
             <div class="table-responsive">
                 <div class="d-flex justify-content-end">
+                    @if (auth()->user()->role == 'Admin')
                     <a href="{{ route('ruangan.tambah') }}" class="btn btn-primary">+ Tambah Data</a>
+                    @endif
                 </div>
                 <table class="table table-bordered mt-3" id="dataTable" width="100%" cellspacing="0">
                     <thead>
@@ -35,8 +37,10 @@
                                 <td>{{ $row->jabatan }}</td>
                                 <td>{{ $row->nip }}</td>
                                 <td>
+                                    @if (auth()->user()->role == 'Admin')
                                     <a href="{{ route('ruangan.edit', $row->id) }}" class="btn btn-warning"><i class="fa-solid fa-pen-to-square"></i></a>
                                     <a href="{{ route('ruangan.hapus', $row->id) }}" class="btn btn-danger"><i class="fa-solid fa-trash-can"></i></a>
+                                    @endif
                                     <button type="button" class="btn btn-info" data-toggle="modal" data-target="#detailModal{{ $row->id }}"><i class="fa-solid fa-circle-info"></i></button>
                                 </td>
                             </tr>
