@@ -12,7 +12,7 @@ class MutasiController extends Controller
 {
     public function index()
     {
-        $mutasi = Mutasi::with(['asset', 'jenisMutasi', 'ruanganTujuan', 'asset.kategoriAset', 'asset.kondisiAset', 'asset.satuanAset', 'asset.sumberDana', 'jenisMutasi'])->get();
+        $mutasi = Mutasi::with(['asset', 'jenisMutasi', 'ruanganTujuan', 'asset.ruanganAsal', 'asset.kategoriAset', 'asset.kondisiAset', 'asset.satuanAset', 'asset.sumberDana', 'jenisMutasi'])->get();
         return view('mutasi.index', ['data' => $mutasi]);
     }
 
@@ -41,6 +41,9 @@ class MutasiController extends Controller
             'alasan_mutasi' => $request->alasan_mutasi,
         ];
 
+        $aset = Aset::findOrFail($request->aset_mutasi);
+        $aset->update(['ruangan_asal' => $request->tujuan]);
+
         Mutasi::create($mutasi);
         return redirect()->route('mutasi');
     }
@@ -64,6 +67,9 @@ class MutasiController extends Controller
             'tujuan' => $request->tujuan,
             'alasan_mutasi' => $request->alasan_mutasi,
         ];
+
+        $aset = Aset::findOrFail($request->aset_mutasi);
+        $aset->update(['ruangan_asal' => $request->tujuan]);
 
         Mutasi::find($id)->update($mutasi);
         return redirect()->route('mutasi');

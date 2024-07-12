@@ -17,7 +17,6 @@
                             <th>Jenis Mutasi</th>
                             <th>Aset yang dimutasi</th>
                             <th>Merek</th>
-                            <th>Ruangan Asal</th>
                             <th>Ruangan Tujuan</th>
                             <th>Alasan Mutasi</th>
                             <th>Aksi</th>
@@ -41,7 +40,6 @@
                                         <td>{{ $row->jenisMutasi->kode_mutasi ?? 'N/A' }}</td>
                                         <td>{{ $row->asset->nama_aset ?? 'N/A' }}</td>
                                         <td>{{ $row->asset->merek ?? 'N/A' }}</td>
-                                        <td>{{ $row->asset->ruanganAsal->nama_ruangan ?? 'N/A' }}</td>
                                         <td>{{ $row->ruanganTujuan->nama_ruangan ?? 'N/A' }}</td>
                                         <td>{{ $row->alasan_mutasi }}</td>
                                         <td>
@@ -112,8 +110,6 @@
                                                         {{ $row->asset->kondisiAset->nama_kondisi ?? 'N/A' }}</p>
                                                     <p><strong>Jenis Mutasi:</strong> {{ $row->jenisMutasi->jenismutasi }}
                                                     </p>
-                                                    <p><strong>Ruangan Asal:</strong>
-                                                        {{ $row->asset->ruanganAsal->nama_ruangan ?? 'N/A' }}</p>
                                                     <p><strong>Ruangan Tujuan:</strong>
                                                         {{ $row->ruanganTujuan->nama_ruangan ?? 'N/A' }}</p>
                                                 </div>

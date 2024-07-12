@@ -16,7 +16,7 @@ class Pinjam extends Model
         return $this->belongsTo(Aset::class, 'aset_dipinjam');
     }
 
-    public function ruanganAsal()
+    public function ruanganPeminjam()
     {
         return $this->belongsTo(Ruangan::class, 'ruangan_peminjam');
     }
