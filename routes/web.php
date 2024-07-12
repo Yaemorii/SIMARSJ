@@ -15,6 +15,8 @@ use App\Http\Controllers\PemeliharaanController;
 use App\Http\Controllers\PeminjamanController;
 use App\Http\Controllers\RuanganController;
 use App\Http\Controllers\HakAksesController;
+use App\Http\Controllers\ProfileController;
+
 
 /*
 |--------------------------------------------------------------------------
@@ -38,6 +40,8 @@ Route::get('/logout', [AuthController::class, 'logout'])->name('logout');
 // Group routes that need authentication
 Route::middleware(['auth'])->group(function () {
     Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard');
+    Route::get('/profile', [ProfileController::class, 'show'])->name('profile.show');
+    Route::put('/profile', [ProfileController::class, 'update'])->name('profile.update');
     
     Route::controller(KategoriController::class)->prefix('kategori')->group(function () {
         Route::get('', 'index')->name('kategori');

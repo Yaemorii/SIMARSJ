@@ -199,17 +199,10 @@
                 <div class="card-body">
                     <div class="row no-gutters align-items-center">
                         <div class="col mr-2">
-                            @if (auth()->user()->role == 'Admin')
-                                <a href="{{ route('ruangan') }}"
-                                    class="text-s font-weight-bold text-primary text-uppercase mb-1">
-                                    Ruangan</a>
-                                <div class="h5 mb-0 font-weight-bold text-gray-800">{{ $totalRuangan }}</div>
-                            @endif
-                            @if (auth()->user()->role != 'Admin')
-                                <p class="text-s font-weight-bold text-primary text-uppercase mb-1">
-                                    Ruangan</p>
-                                <div class="h5 mb-0 font-weight-bold text-gray-800">{{ $totalRuangan }}</div>
-                            @endif
+                            <a href="{{ route('ruangan') }}"
+                                class="text-s font-weight-bold text-primary text-uppercase mb-1">
+                                Ruangan</a>
+                            <div class="h5 mb-0 font-weight-bold text-gray-800">{{ $totalRuangan }}</div>
                         </div>
                         <div class="col-auto">
                             <i class="fa-solid fa-building fa-2x text-gray-300"></i>
